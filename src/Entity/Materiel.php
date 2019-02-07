@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Materiel
  *
- * @ORM\Table(name="Materiel")
+ * @ORM\Table(name="Materiel", indexes={@ORM\Index(name="Categorie", columns={"Categorie"}), @ORM\Index(name="Etat", columns={"Etat"}), @ORM\Index(name="Marque", columns={"Marque"})})
  * @ORM\Entity
  */
 class Materiel
@@ -36,29 +36,41 @@ class Materiel
     private $provenance;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Etat", type="string", length=50, nullable=false)
-     */
-    private $etat;
-
-
-   /**
-    * @var \Categorie
-    *
-    * @ORM\ManyToOne(targetEntity="Categorie")
-    * @ORM\JoinColumns({
-    *   @ORM\JoinColumn(name="categorie", referencedColumnName="Id")
-    * })
-    */
-    private $categorie;
-
-    /**
      * @var bool|null
      *
      * @ORM\Column(name="StatutEmprunt", type="boolean", nullable=true)
      */
     private $statutemprunt;
+
+    /**
+     * @var \Categorie
+     *
+     * @ORM\ManyToOne(targetEntity="Categorie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Categorie", referencedColumnName="Id")
+     * })
+     */
+    private $categorie;
+
+    /**
+     * @var \Etat
+     *
+     * @ORM\ManyToOne(targetEntity="Etat")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Etat", referencedColumnName="id")
+     * })
+     */
+    private $etat;
+
+    /**
+     * @var \Marque
+     *
+     * @ORM\ManyToOne(targetEntity="Marque")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Marque", referencedColumnName="id")
+     * })
+     */
+    private $marque;
 
     public function getId(): ?int
     {
@@ -89,14 +101,14 @@ class Materiel
         return $this;
     }
 
-    public function getEtat(): ?string
+    public function getStatutemprunt(): ?bool
     {
-        return $this->etat;
+        return $this->statutemprunt;
     }
 
-    public function setEtat(string $etat): self
+    public function setStatutemprunt(?bool $statutemprunt): self
     {
-        $this->etat = $etat;
+        $this->statutemprunt = $statutemprunt;
 
         return $this;
     }
@@ -113,14 +125,26 @@ class Materiel
         return $this;
     }
 
-    public function getStatutemprunt(): ?bool
+    public function getEtat(): ?Etat
     {
-        return $this->statutemprunt;
+        return $this->etat;
     }
 
-    public function setStatutemprunt(?bool $statutemprunt): self
+    public function setEtat(?Etat $etat): self
     {
-        $this->statutemprunt = $statutemprunt;
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): self
+    {
+        $this->marque = $marque;
 
         return $this;
     }

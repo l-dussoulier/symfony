@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Emprunt
  *
- * @ORM\Table(name="emprunt", indexes={@ORM\Index(name="emprunt_emprunteur_FK", columns={"idEmprunteur"}), @ORM\Index(name="emprunt_membre_asso0_FK", columns={"idMembre"}), @ORM\Index(name="emprunt_membre_asso1_FK", columns={"idMembre_membre_asso"}), @ORM\Index(name="emprunt_Materiel2_FK", columns={"Id"})})
+ * @ORM\Table(name="emprunt", indexes={@ORM\Index(name="emprunt_emprunteur_FK", columns={"idEmprunteur"}), @ORM\Index(name="emprunt_Materiel2_FK", columns={"Id"})})
  * @ORM\Entity
  */
 class Emprunt
@@ -36,11 +36,25 @@ class Emprunt
     private $dateretourdemander;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="DateRetourEffectif", type="date", nullable=false)
+     * @ORM\Column(name="DateRetourEffectif", type="date", nullable=true)
      */
     private $dateretoureffectif;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="Statut_emprunt", type="integer", nullable=true)
+     */
+    private $statutEmprunt;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Incident", type="string", length=1000, nullable=true)
+     */
+    private $incident;
 
     /**
      * @var \Materiel
@@ -60,28 +74,7 @@ class Emprunt
      *   @ORM\JoinColumn(name="idEmprunteur", referencedColumnName="idEmprunteur")
      * })
      */
-     
     private $idemprunteur;
-
-    /**
-     * @var \MembreAsso
-     *
-     * @ORM\ManyToOne(targetEntity="MembreAsso")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idMembre", referencedColumnName="idMembre")
-     * })
-     */
-    private $idmembre;
-
-    /**
-     * @var \MembreAsso
-     *
-     * @ORM\ManyToOne(targetEntity="MembreAsso")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idMembre_membre_asso", referencedColumnName="idMembre")
-     * })
-     */
-    private $idmembreMembreAsso;
 
     public function getIdemprunt(): ?int
     {
@@ -117,9 +110,33 @@ class Emprunt
         return $this->dateretoureffectif;
     }
 
-    public function setDateretoureffectif(\DateTimeInterface $dateretoureffectif): self
+    public function setDateretoureffectif(?\DateTimeInterface $dateretoureffectif): self
     {
         $this->dateretoureffectif = $dateretoureffectif;
+
+        return $this;
+    }
+
+    public function getStatutEmprunt(): ?int
+    {
+        return $this->statutEmprunt;
+    }
+
+    public function setStatutEmprunt(?int $statutEmprunt): self
+    {
+        $this->statutEmprunt = $statutEmprunt;
+
+        return $this;
+    }
+
+    public function getIncident(): ?string
+    {
+        return $this->incident;
+    }
+
+    public function setIncident(?string $incident): self
+    {
+        $this->incident = $incident;
 
         return $this;
     }
@@ -144,30 +161,6 @@ class Emprunt
     public function setIdemprunteur(?Emprunteur $idemprunteur): self
     {
         $this->idemprunteur = $idemprunteur;
-
-        return $this;
-    }
-
-    public function getIdmembre(): ?MembreAsso
-    {
-        return $this->idmembre;
-    }
-
-    public function setIdmembre(?MembreAsso $idmembre): self
-    {
-        $this->idmembre = $idmembre;
-
-        return $this;
-    }
-
-    public function getIdmembreMembreAsso(): ?MembreAsso
-    {
-        return $this->idmembreMembreAsso;
-    }
-
-    public function setIdmembreMembreAsso(?MembreAsso $idmembreMembreAsso): self
-    {
-        $this->idmembreMembreAsso = $idmembreMembreAsso;
 
         return $this;
     }

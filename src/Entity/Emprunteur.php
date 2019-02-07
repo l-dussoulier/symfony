@@ -43,11 +43,25 @@ class Emprunteur
     private $formation;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="Incidents", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nom_connexion", type="string", length=10, nullable=true)
      */
-    private $incidents;
+    private $nomConnexion;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="password", type="string", length=8, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="droit", type="integer", nullable=true)
+     */
+    private $droit;
 
     public function getIdemprunteur(): ?int
     {
@@ -90,14 +104,38 @@ class Emprunteur
         return $this;
     }
 
-    public function getIncidents(): ?string
+    public function getNomConnexion(): ?string
     {
-        return $this->incidents;
+        return $this->nomConnexion;
     }
 
-    public function setIncidents(string $incidents): self
+    public function setNomConnexion(?string $nomConnexion): self
     {
-        $this->incidents = $incidents;
+        $this->nomConnexion = $nomConnexion;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getDroit(): ?int
+    {
+        return $this->droit;
+    }
+
+    public function setDroit(?int $droit): self
+    {
+        $this->droit = $droit;
 
         return $this;
     }

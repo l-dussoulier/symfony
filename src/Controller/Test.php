@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Materiel;
-use App\Entity\MembreAsso;
+use App\Entity\Emprunteur;
 use App\Entity\Emprunt;
 
 //------------------------------------------------------
@@ -56,7 +56,7 @@ class Test extends Controller
           "message" => "liste des Materiels",
           "listeMateriel" => $tabMateriel
           ));
-          // prout 
+          // prout
     }
 
 
@@ -67,7 +67,7 @@ class Test extends Controller
     public function listeMembres()
     {
 
-        $tabMembre = $this->getDoctrine()->getRepository(MembreAsso::class)->findAll();
+        $tabMembre = $this->getDoctrine()->getRepository(Emprunteur::class)->findAll();
 
         return $this->render('AfficherListeMembres.html.twig',
             array(
