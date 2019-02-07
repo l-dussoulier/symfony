@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Emprunt</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    </head>
+    <body class="container">
+
+    {% include 'nav.html' %}
+
+    	<h1 class="text-primary">Liste des emprunts en cours</h1>
+    </br>
+    	<table class="table table-striped table-hover">
+            <tr>
+                <td> Id emprunt </td>
+                <td> Date du pret </td>
+                <td> Date retour demander </td>
+
+                <td>  </td>
+                <td>  </td>
+            </tr>
+            {% for Tab in listeEmprunt %}
+            {% if Tab.DateRetourEffectif == NULL %}
+      			<tr>
+      				<td>{{Tab.idEmprunt}} </td>
+              <td>{{Tab.DatePret|date("d/m/Y")}} </td>
+              <td>{{Tab.DateRetourDemander|date("d/m/Y")}} </td>
+
+              <td><button onclick="retour({{Tab.idEmprunt}})" type="button" class="btn btn-danger">Retour</button></td>
+            </tr>
+          {% endif %}
+    		{% endfor %}
+    	</table>
+
+      	<script type="text/javascript">
+
+
+          function retour(id)
+          {
+
+            console.log(id);
+             location.href = "https://kroko.ovh/~soares/TestSymfony/public/index.php/retourEmprunt/"+id;
+
+          }
+
+          function traiterRepJ1(donnees)
+          {
+            console.log(donnees);
+          }
+        </script>
+
+    </body>
+</html>
