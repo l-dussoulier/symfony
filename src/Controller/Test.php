@@ -56,7 +56,7 @@ class Test extends Controller
           "message" => "liste des Materiels",
           "listeMateriel" => $tabMateriel
           ));
-
+          // prout 
     }
 
 
