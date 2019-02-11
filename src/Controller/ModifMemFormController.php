@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\MembreAsso;
+use App\Entity\Emprunteur;
 
 
 //------------------------------------------------------
@@ -33,13 +33,16 @@ class ModifMemFormController extends Controller
 
 
         // On crée une instance, associée au formulaire
-        $unMem = $this->getDoctrine()->getRepository(MembreAsso::class)->find($idMembre);
+        $unMem = $this->getDoctrine()->getRepository(Emprunteur::class)->find($idMembre);
 
 
         // partie "création"
         $formulaire = $this->createFormBuilder($unMem)
-        ->add("NomMembre", TextType::class, array("label"=> "Nom :", "required"=>true))
-        ->add("PrenomMembre", TextType::class, array("label"=> "Prenom : ", "required"=>true))
+        ->add("Nom", TextType::class, array("label"=> "Nom :", "required"=>true))
+        ->add("Prenom", TextType::class, array("label"=> "Prenom : ", "required"=>true))
+        ->add("Formation", TextType::class, array("label"=> "Formation : ", "required"=>false))
+        ->add("nom_connexion", TextType::class, array("label"=> "Nom de connexion: ", "required"=>true))
+        ->add("password", TextType::class, array("label"=> "Mot de passe: ", "required"=>true))
 
         ->add("valider", SubmitType::class,array("label"=> "Modifier un membre "))
         ->getForm();

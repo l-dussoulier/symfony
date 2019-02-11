@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use App\Entity\Categorie;
+use App\Entity\Etat;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -51,8 +52,12 @@ class AjoutMatFormController extends Controller
         $formulaire = $this->createFormBuilder($unMat)
             ->add("description", TextType::class, array("label"=> "Description :", "required"=>true))
             ->add("provenance", TextType::class, array("label"=> "Provenance : ", "required"=>true))
-            ->add("etat", TextType::class, array("label"=> "Etat : ", "required"=>true))
-            ->add("categorie", IntegerType::class, array("label"=> "Catégorie : ", "required"=>true))
+            ->add('Etat', EntityType::class, array(
+                'class' => Etat::class,
+                'choice_label' => 'libelle',
+                'placeholder' => 'sélectionner un état',
+
+            ))
             ->add('categorie', EntityType::class, array(
                 'class' => categorie::class,
                 'choice_label' => 'NomCat',

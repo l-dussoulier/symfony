@@ -20,8 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 use App\Entity\Categorie;
+use App\Entity\Etat;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -46,9 +48,9 @@ class ModifMatFormController extends Controller
         // partie "création"
         $formulaire = $this->createFormBuilder($unMat)
             ->add("description", TextType::class, array("label"=> "Description :", "required"=>true))
-            ->add("provenance", TextType::class, array("label"=> "Provenance : ", "required"=>true))
-            ->add("etat", TextType::class, array("label"=> "Etat : ", "required"=>true))
-            
+            ->add("Provenance", TextType::class, array("label"=> "Provenance : ", "required"=>true))
+            ->add("Etat", IntegerType::class, array("label"=> "Etat : ", "required"=>true))
+
             ->add('categorie', EntityType::class, array(
                   'class' => categorie::class,
                   'choice_label' => 'NomCat',

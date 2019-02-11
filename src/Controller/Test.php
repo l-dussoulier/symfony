@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\Materiel;
+use App\Entity\VueMateriel;
 use App\Entity\Emprunteur;
 use App\Entity\Emprunt;
 
@@ -27,7 +27,7 @@ class Test extends Controller
     public function listeMateriel()
     {
 
-        $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
+        $tabMateriel = $this->getDoctrine()->getRepository(VueMateriel::class)->findAll();
 
         return $this->render('salut.html.twig',
   		    	array(
@@ -84,12 +84,12 @@ class Test extends Controller
     {
 
       $entityManager = $this->getDoctrine()->getManager();
-      $Mem = $this->getDoctrine()->getRepository(MembreAsso::class)->find($idMembres);
+      $Mem = $this->getDoctrine()->getRepository(Emprunteur::class)->find($idMembres);
 
       $entityManager->remove($Mem);
       $entityManager->flush();
 
-      $tabMembre = $this->getDoctrine()->getRepository(MembreAsso::class)->findAll();
+      $tabMembre = $this->getDoctrine()->getRepository(Emprunteur::class)->findAll();
 
       return $this->render('AfficherListeMembres.html.twig',
           array(

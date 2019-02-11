@@ -16,9 +16,18 @@
 
 
     	<h1 class="text-primary">Ajout un membre</h1>
-
         {{ form_start(formulaire) }}
-        {{ form_widget(formulaire) }}
+        <div class="row">
+            <div class="col-md-3">{{form_row(formulaire.Nom)}}</div>
+            <div class="col-md-3">{{form_row(formulaire.Prenom)}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{form_row(formulaire.Formation)}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{form_row(formulaire.nom_connexion)}}</div>
+            <div class="col-md-4">{{form_row(formulaire.password)}}</div>
+        </div>
         {{ form_end(formulaire) }}
     </body>
 </html>
