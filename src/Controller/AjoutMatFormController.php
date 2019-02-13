@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use App\Entity\Categorie;
 use App\Entity\Etat;
+use App\Entity\Marque;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -58,6 +59,13 @@ class AjoutMatFormController extends Controller
                 'placeholder' => 'sélectionner un état',
 
             ))
+            ->add('Marque', EntityType::class, array(
+                'class' => Marque::class,
+                'choice_label' => 'libelle',
+                'placeholder' => 'sélectionner une marque',
+
+            ))
+
             ->add('categorie', EntityType::class, array(
                 'class' => categorie::class,
                 'choice_label' => 'NomCat',
@@ -82,7 +90,7 @@ class AjoutMatFormController extends Controller
            $this->getDoctrine()->getManager()->persist($unMat);
            $this->getDoctrine()->getManager()->flush();
 
-              return $this->render('bienvenue.html.twig');
+              return $this->redirectToRoute('ajoutMat');
        }
 
 

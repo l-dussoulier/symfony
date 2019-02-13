@@ -60,7 +60,7 @@ class AjoutMemFormController extends Controller
            $this->getDoctrine()->getManager()->persist($unMem);
            $this->getDoctrine()->getManager()->flush();
 
-              return $this->render('bienvenue.html.twig');
+              return $this->redirectToRoute('listeMembres');
        }
 
        // prout prout prout test.
