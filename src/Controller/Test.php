@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\VueMateriel;
+use App\Entity\Materiel;
 use App\Entity\Emprunteur;
 use App\Entity\Emprunt;
 
@@ -18,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 class Test extends Controller
 {
     /**
@@ -45,18 +47,17 @@ class Test extends Controller
 
       $entityManager = $this->getDoctrine()->getManager();
       $Mat = $this->getDoctrine()->getRepository(Materiel::class)->find($idMateriel);
-
       $entityManager->remove($Mat);
       $entityManager->flush();
 
-      $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
+
+      $tabMateriel = $this->getDoctrine()->getRepository(VueMateriel::class)->findAll();
 
       return $this->render('salut.html.twig',
           array(
           "message" => "liste des Materiels",
           "listeMateriel" => $tabMateriel
-          ));
-          // prout
+            ));
     }
 
 

@@ -28,7 +28,7 @@ class ModifMemFormController extends Controller
     /**
      * @Route("/modifMem/{idMembre}", name="modifMembre")
      */
-    public function modifMat(Request $request,$idMembre) // paramètre qui donnera accès aux données saisies
+    public function modifMembre(Request $request,$idMembre) // paramètre qui donnera accès aux données saisies
     {
 
 

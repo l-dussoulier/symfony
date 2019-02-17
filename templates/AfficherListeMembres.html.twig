@@ -6,9 +6,18 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script  src="js/commun.js" ></script>
+    <style type="text/css">
+      .cont{
+        padding-left: 20em;
+        padding-right: 6em;
 
+      }
+
+
+    </style>
     </head>
-    <body class="container">
+    <body>
+    <div class="cont">
 
     {% include 'nav.html' %}
 
@@ -16,26 +25,49 @@
     	{{message}}
     	<table class="table table-striped table-hover">
           <tr>
-            <td><b>ID</b></td>
+            <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4; "> <b>ID</b></td>
             <td><b>Nom</b></td>
             <td><b>Prenom</b></td>
             <td><b>Formation</b></td>
             <td><b>Nom de Connexion</b></td>
             <td><b>Password</b></td>
-            <td></td>
-            <td></td>
+            <td style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> </td>
           </tr>
     		{% for Tab in listeMembres %}
     			<tr>
-    				<td>{{Tab.idEmprunteur}} </td>
+            <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">{{Tab.idEmprunteur}}</td>
     				<td>{{Tab.Nom}} </td>
             <td>{{Tab.Prenom}} </td>
             <td>{{Tab.Formation}} </td>
             <td>{{Tab.nomConnexion}} </td>
             <td>{{Tab.password}} </td>
-            <td>  <button onclick="effacer({{Tab.idEmprunteur}})" type="button" class="btn btn-danger">Effacer</button></td>
-            <td>  <button onclick="modif({{Tab.idEmprunteur}})" type="button" class="btn btn-secondary">Modifier</button></td>
-          </tr>
+
+
+            <td style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">
+                     <div class="dropdown">
+
+                         <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
+
+                            <div class="dropdown-menu">
+
+                               <a class="dropdown-item">
+                                 <form  action="{{ path('effacerMembres', {idMembres: Tab.idEmprunteur}) }}" >
+                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
+                                 </form>
+                               </a>
+
+                               <a class="dropdown-item">
+                                 <form  action="{{ path('modifMembre', {idMembre: Tab.idEmprunteur}) }}" >
+                                   <button  class="btn btn-info"><i class="fas fa-pen"></i>  Editer</button>
+                                 </form>
+                               </a>
+                        </div>
+
+            </td>
+
+
+
+        </tr>
     		{% endfor %}
 
 
@@ -43,21 +75,8 @@
     	</table>
 
       	<script type="text/javascript">
-          function effacer(id)
-          {
-
-            if (popUpValidation()){
-            console.log(id);
-              var url = "{{path('effacerMembres', {idMembres: ':idJ'})}}";
-              url = url.replace(":idJ",id);
-              $.post(
-                url
-              );
 
 
-            location.href = "https://kroko.ovh/~soares/TestSymfony/public/index.php/listeMembres";
-            }
-          }
 
 
 
@@ -73,6 +92,6 @@
 
 
         </script>
-
+</div>
     </body>
 </html>

@@ -5,29 +5,33 @@
         <title>Membre</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    <style type="text/css">
+      .cont{
+        padding-left: 14em;
+        padding-bottom: 10em;
+      }
+    </style>
     </head>
 
 
     {% include 'nav.html' %}
 
     <body class="container">
-
-
-
-    	<h1 class="text-primary">Ajout un membre</h1>
-        {{ form_start(formulaire) }}
-        <div class="row">
-            <div class="col-md-3">{{form_row(formulaire.Nom)}}</div>
-            <div class="col-md-3">{{form_row(formulaire.Prenom)}}</div>
+      <div class="cont">
+        	<h1 class="text-primary">Ajout un membre</h1>
+            {{ form_start(formulaire) }}
+            <div class="row">
+                <div class="col-md-3">{{form_row(formulaire.Nom)}}</div>
+                <div class="col-md-3">{{form_row(formulaire.Prenom)}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{form_row(formulaire.Formation)}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{form_row(formulaire.nom_connexion)}}</div>
+                <div class="col-md-4">{{form_row(formulaire.password)}}</div>
+            </div>
+            {{ form_end(formulaire) }}
         </div>
-        <div class="row">
-            <div class="col-md-4">{{form_row(formulaire.Formation)}}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">{{form_row(formulaire.nom_connexion)}}</div>
-            <div class="col-md-4">{{form_row(formulaire.password)}}</div>
-        </div>
-        {{ form_end(formulaire) }}
     </body>
 </html>

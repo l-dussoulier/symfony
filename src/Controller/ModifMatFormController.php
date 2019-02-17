@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 use App\Entity\Categorie;
 use App\Entity\Etat;
+use App\Entity\Marque;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -48,9 +49,19 @@ class ModifMatFormController extends Controller
         // partie "création"
         $formulaire = $this->createFormBuilder($unMat)
             ->add("description", TextType::class, array("label"=> "Description :", "required"=>true))
-            ->add("Provenance", TextType::class, array("label"=> "Provenance : ", "required"=>true))
-            ->add("Etat", IntegerType::class, array("label"=> "Etat : ", "required"=>true))
+            ->add('Marque', EntityType::class, array(
+                  'class' => Marque::class,
+                  'choice_label' => 'libelle',
+                  'placeholder' => 'sélectionner une Marque',
 
+              ))
+            ->add("Provenance", TextType::class, array("label"=> "Provenance : ", "required"=>true))
+            ->add('Etat', EntityType::class, array(
+                  'class' => Etat::class,
+                  'choice_label' => 'libelle',
+                  'placeholder' => 'sélectionner un état',
+
+              ))
             ->add('categorie', EntityType::class, array(
                   'class' => categorie::class,
                   'choice_label' => 'NomCat',

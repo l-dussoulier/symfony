@@ -5,21 +5,23 @@
         <title>Emprunt</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
+    <style type="text/css">
+      .cont{
+        padding-left: 14em;
+        padding-bottom: 10em;
+      }
+    </style>
     </head>
     <body class="container">
 
     {% include 'nav.html' %}
-
+    <div class="cont">
     	<h1 class="text-primary">Liste des emprunts en cours</h1>
-    </br>
-    	<table class="table table-striped table-hover">
+    	   <table class="table table-striped table-hover">
             <tr>
                 <td><b> Id emprunt </b></td>
                 <td><b> Date du pret </b></td>
                 <td><b> Date retour demander </b></td>
-
-                <td>  </td>
                 <td>  </td>
             </tr>
             {% for Tab in listeEmprunt %}
@@ -51,6 +53,6 @@
             console.log(donnees);
           }
         </script>
-
+      </div>
     </body>
 </html>
