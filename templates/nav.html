@@ -313,7 +313,7 @@
         transform: translate(0, -50%);
         transform: translate3d(0, -50%, 0);
       }
-      sidebar ul.nav li.active a {
+      sidebar ul.nav li a:hover {
         color: rgba(185, 204, 220, 0.8);
         background: rgba(185, 204, 220, 0.1);
       }
@@ -452,19 +452,19 @@
 		</button>
 		<div class="collapse in" id="myContent">
 			<ul class="nav">
-				<li>
+				<li id="navListesMateriel">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/listeMateriel">
 						<svg class="lnr lnr-star"><use xlink:href="#lnr-star"></use></svg>
 						Materiel
 					</a>
 				</li>
-				<li class="active">
+				<li id="navListesMembre">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/listeMembres">
 						<svg class="lnr lnr-eye"><use xlink:href="#lnr-eye"></use></svg>
 						Membre
 					</a>
 				</li>
-				<li>
+				<li id="navListesMarque">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/AffichageMarque">
 						<svg class="lnr lnr-tag"><use xlink:href="#lnr-tag"></use></svg>
 						Marque
@@ -478,19 +478,19 @@
 		</button>
 		<div class="collapse in" id="mainContent">
 			<ul class="nav">
-				<li>
+				<li id ="navAjouterMateriel">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/ajoutMat">
 						<svg class="lnr lnr-heart-pulse"><use xlink:href="#lnr-heart-pulse"></use></svg>
 						Materiel
 					</a>
 				</li>
-				<li>
+				<li id="navAjouterMembre">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/ajoutMem">
 						<svg class="lnr lnr-inbox"><use xlink:href="#lnr-inbox"></use></svg>
 						Membre
 					</a>
 				</li>
-				<li>
+				<li id="navAjouterMarque">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/ajoutMarque">
 						<svg class="lnr lnr-download"><use xlink:href="#lnr-download"></use></svg>
 						Marque
@@ -504,16 +504,16 @@
 		</button>
 		<div class="collapse in" id="fundNavigation">
 			<ul class="nav">
-				<li>
+				<li id="EmpruntsEnCours">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/listeEmpruntEnCours">
 						<svg class="lnr lnr-heart-pulse"><use xlink:href="#lnr-heart-pulse"></use></svg>
 						En cours
 					</a>
 				</li>
-				<li>
+				<li id ="EmpruntsTerminees">
 					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/AffichageEmpruntFin">
 						<svg class="lnr lnr-chart-bars"><use xlink:href="#lnr-chart-bars"></use></svg>
-						Terminée
+						Terminées
 					</a>
 				</li>
 			</ul>
