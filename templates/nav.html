@@ -432,6 +432,16 @@
         }
       }
 
+      .deco {
+        margin-left: 2em;
+        margin-top: 1em;
+      }
+      .mess {
+        color: white;
+        margin-top: 1em;
+        margin-left: 2em;
+      }
+
       </style>
 
 </head>
@@ -443,6 +453,17 @@
 
 
 <div id="prout">
+
+        <div class="mess">
+          {{app.user.username}}
+        </div>
+        <div class="deco">
+            {% if not app.user %}
+    					<a class="btn btn-success" href="{{ path('security_login' )}}">Connexion</a>
+            {% else %}
+              <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
+            {% endif %}
+      </div>
 
 </div>
 

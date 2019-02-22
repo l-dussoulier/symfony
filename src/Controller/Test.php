@@ -38,6 +38,74 @@ class Test extends Controller
   		    	));
     }
 
+
+    /**
+    *
+    * @Route("/TestRecherche",name="TestRecherche")
+    */
+    function TestRecherche(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository(Materiel::class)->createQueryBuilder('qb');
+
+        if ($request->request->get("query")) {
+
+
+          
+            $arrData = ['output' => $query];
+            return new JsonResponse($arrData);
+        }
+
+        if($request->isXmlHttpRequest()){
+            $arrData = ['output' => $request->request->get("query")];
+            return new JsonResponse($arrData);
+        }
+
+        $Materiel = new Materiel();
+        $Materiel=$em->getRepository(Materiel::class)->findAll();
+
+        return $this->render('TestRecherche.html.twig',
+            array(
+            "message" => "liste des Materiels",
+            "voitures" => $Materiel
+            ));
+    }
+
+    /**
+    *
+    * @Route("/TestRecherche1",name="TestRecherche1")
+    */
+    public function TestRecherche1(Request $request)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $tabMateriel = $em->getRepository(VueMateriel::class)->findAll();
+
+      if($request->isXmlHttpRequest()){
+
+          return new JsonResponse($request->query->getAlnum('filter'));
+      }
+
+      return $this->render('TestRecherche.html.twig');
+
+    }
+
+
+    /**
+    *
+    * @Route("/indexAction",name="indexAction")
+    */
+    public function indexAction(Request $request)
+    {
+        if($request->request->get('some_var_name')){
+            //make something curious, get some unbelieveable data
+            $arrData = ['output' => 'here the result which will appear in div'];
+            return new JsonResponse($arrData);
+        }
+
+        return $this->render('TestRechercheQuiMarche.html.twig');
+    }
+
     /**
     *
     * @Route("/effacerMateriel/{idMateriel}", name="effacerMateriel")
