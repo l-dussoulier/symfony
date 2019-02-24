@@ -7,23 +7,32 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
  * fields = {"email"},
  * message = "L'email que vous indiqué est déjà utilisé !")
  */
-class Emprunteur implements UserInterface
+class User implements UserInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="idEmprunteur", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
      */
-    private $idemprunteur;
+    private $id;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
 
     /**
      * @var string
@@ -46,16 +55,6 @@ class Emprunteur implements UserInterface
      */
     private $formation;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
-     */
-    private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -68,11 +67,21 @@ class Emprunteur implements UserInterface
      */
     public $confirm_password;
 
-
-
-    public function getIdemprunteur(): ?int
+    public function getId(): ?int
     {
-        return $this->idemprunteur;
+        return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -140,6 +149,7 @@ class Emprunteur implements UserInterface
     public function getSalt() {}
 
     public function getRoles(){
-      return ['ROLE_USER'];
+      return ['ROLE_ADMIN'];
     }
+
 }

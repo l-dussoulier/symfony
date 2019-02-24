@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>registation</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style type="text/css">
+      .cont{
+        padding-left: 14em;
+        padding-bottom: 10em;
+      }
+
+    </style>
+    </head>
+    {% include 'nav.html' %}
+
+    <body class="container">
+      <div class="cont">
+
+
+      <h1>inscription sur le site</h1>
+
+      {{ form_start(form) }}
+      {{ form_row(form.username, {'label':'Nom d\'utilisateur','attr':{'placeholder':'Nom de l\'utilisateur ...'}}) }}
+      {{ form_row(form.Nom, {'label':'Nom ','attr':{'placeholder':'Nom  ...'}}) }}
+      {{ form_row(form.Prenom, {'label':'Prénom ','attr':{'placeholder':'Prénom  ...'}}) }}
+      {{ form_row(form.email, {'label':'Email','attr':{'placeholder':'example@example.com'}}) }}
+      {{ form_row(form.Formation, {'label':'Formation ','attr':{'placeholder':'Votre formation ...'}}) }}
+      {{ form_row(form.password, {'label':'Mot de passe','attr':{'placeholder':'Mot de passe ...'}}) }}
+      {{ form_row(form.confirm_password, {'label':'Confirmation du mot de passe','attr':{'placeholder':'confirmation mot de passe'}}) }}
+      <button type="submit" class="btn btn-success">Inscription !</button>
+      {{ form_end(form) }}
+      </div>
+    </body>
+    </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>coucou</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script  src="js/commun.js" ></script>
+    <style type="text/css">
+      .cont{
+        padding-left: 14em;
+        padding-bottom: 10em;
+      }
+
+      #nomMarque{
+        padding-right: 5em;
+      }
+
+    </style>
+
+    </head>
+    <body class="container">
+
+    {% include 'nav.html' %}
+
+    <style>
+      #navListesMarque  {
+        color: rgba(185, 204, 220, 0.8);
+        background: rgba(185, 204, 220, 0.1);
+      }
+    </style>
+
+    <div class="cont">
+
+    	<h1 class="text-primary">{{message}}</h1>
+
+    	<table class="table table-striped table-hover">
+          <tr>
+              <td><b>ID</td>
+                <td><b>Nom</td>
+                  <td></td>
+          </tr>
+    		{% for Tab in listeMarque %}
+    			<tr>
+    				<td>{{Tab.id}} </td>
+    				<td>{{Tab.libelle}} </td>
+
+            <td>
+                     <div class="dropdown">
+
+                         <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
+
+                            <div class="dropdown-menu">
+
+                               <a class="dropdown-item">
+                                 <form  action="{{ path('effacerMarque', {id: Tab.id}) }}" >
+                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
+                                 </form>
+                               </a>
+
+                               <a class="dropdown-item">
+                                 <form  action="{{ path('modifMarque', {id: Tab.id}) }}" >
+                                   <button  class="btn btn-info"><i class="fas fa-pen"></i>  Editer</button>
+                                 </form>
+                               </a>
+
+
+                        </div>
+
+            </td>
+
+          </tr>
+    		{% endfor %}
+
+
+
+    	</table>
+
+      	<script type="text/javascript">
+
+          function modif(id)
+          {
+
+            console.log(id);
+             location.href = "https://kroko.ovh/~soares/TestSymfony/public/index.php/modifMem/"+id;
+
+          }
+
+
+        </script>
+    </div>
+    </body>
+</html>

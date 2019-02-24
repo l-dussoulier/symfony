@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>test</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <!-- AJAX -->
+        <script>
+                    $(document).ready(function(){
+                    	load_data();
+                    	function load_data(query)
+                    	{
+                        console.log(query);
+                    		$.ajax({
+                          type: "POST",
+                          url: "{{ path('TestRecherche')}}",
+                    			data:{"query":query},
+                    			success:function(data)
+                    			{
+                            console.log(data);
+                            $('#output').html(data.output);
+                    				$('#tab2').html(data.tab);
+                    			}
+                    		});
+                    	}
+
+                    	$('#search_text').keyup(function(){
+                    		var search = $(this).val();
+                    		if(search != '')
+                    		{
+                    			load_data(search);
+                    		}
+                    		else
+                    		{
+                    			load_data();
+                    		}
+                    	});
+                    });
+        </script>
+
+        <!-- gestion boutons -->
+        <script type="text/javascript">
+
+
+          function modif(id)
+          {
+            console.log(id);
+              var url = "{{path('modifMat', {idMat: ':idJ'})}}";
+              url = url.replace(":idJ",id);
+
+              location.href = url;
+
+          }
+
+          function emprunter(id)
+          {
+            console.log(id);
+            var url = "{{path('CreerNouveauEmprunt', {idMat: ':idJ'})}}";
+            url = url.replace(":idJ",id);
+
+            location.href = url;
+
+          }
+
+          function traiterRepJ1(donnees)
+          {
+            console.log(donnees);
+          }
+
+
+        </script>
+
+    </head>
+    <style>
+      #navListesMateriel  {
+        color: rgba(185, 204, 220, 0.8);
+        background: rgba(185, 204, 220, 0.1);
+      }
+
+      .cont{
+        padding-left: 20em;
+        padding-right: 6em;
+
+      }
+    </style>
+    </head>
+    <body>
+
+
+    <div class="cont">
+        {% include 'nav.html' %}
+        <br>
+        <h1 class="text-primary">{{message}}</h1>
+        <br>
+         {% for message in app.flashes('success')%}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+
+         {% endfor%}
+       <div class="panel panel-default">
+         <div class="panel-body">
+           <h2>Filtres</h2>
+           <br>
+           <p>Rechercher:  <input type="text" name="search_text" id="search_text" placeholder="Rechercher un Materiel" class="form-control" /> </p>
+           <p>Marque: </p>
+           <p>Etat: </p>
+           <p>Catégorie</p>
+        </div>
+       </div>
+      <br>
+      <div id="tab2">
+      <table class="table table-striped table-hover">
+        <tr>
+          <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4; "> <b>ID</b></td>
+          <td><b>Catégorie</b></td>
+          <td><b>Marque</b></td>
+          <td><b>Description</b></td>
+          <td><b>état</b></td>
+          <td style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> </td>
+        </tr>
+        {% for Materiel in listeMateriel %}
+          <tr>
+            <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> {{Materiel.id}} </td>
+            <td>{{Materiel.categorie}} </td>
+            <td>{{Materiel.marque}} </td>
+            <td>{{Materiel.description}} </td>
+            <td>{{Materiel.etat}} </td>
+
+
+            <td>
+                     <div class="dropdown">
+
+                         <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
+
+                            <div class="dropdown-menu">
+
+                               <a class="dropdown-item">
+                                 <form  action="{{ path('effacerMateriel', {idMateriel: Materiel.id}) }}" >
+                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
+                                 </form>
+                               </a>
+
+                               <a class="dropdown-item">
+                                 <form  action="{{ path('modifMat', {idMat: Materiel.id}) }}" >
+                                   <button  class="btn btn-info"><i class="fas fa-pen"></i>  Editer</button>
+                                 </form>
+                               </a>
+
+                              <!-- {% if Materiel.statutemprunt == false %}
+                                 <a class="dropdown-item"><style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><i onclick="emprunter({{Materiel.id}})" class="fas fa-user-check"></i></a>
+                               {% else %}
+                              {% endif %} -->
+                        </div>
+
+            </td>
+
+            </tr>
+        {% endfor %}
+      </table>
+      </div>
+    </body>
+</html>

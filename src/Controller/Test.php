@@ -8,8 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\VueMateriel;
 use App\Entity\Materiel;
-use App\Entity\Emprunteur;
+use App\Entity\User;
 use App\Entity\Emprunt;
+
+use   Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 //------------------------------------------------------
 // supplément pour le formulaire
@@ -19,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 class Test extends Controller
 {
@@ -47,28 +50,41 @@ class Test extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository(Materiel::class)->createQueryBuilder('qb');
-
-        if ($request->request->get("query")) {
-
-
-          
-            $arrData = ['output' => $query];
-            return new JsonResponse($arrData);
-        }
 
         if($request->isXmlHttpRequest()){
-            $arrData = ['output' => $request->request->get("query")];
+            if ($request->request->get("query")) {
+                $tabMateriel = $this->getDoctrine()->getRepository(VueMateriel::class)->MaterielById($request->request->get("query"));
+
+                $render = $this->renderView('RenderRecherche.html.twig', [
+                                                'listeMateriel' => $tabMateriel
+                                            ]);
+
+                $arrData = ['tab' => $render,
+                            'output' => $request->request->get("query")
+                             ];
+                return new JsonResponse($arrData);
+            }
+
+            $Materiel = new VueMateriel();
+            $Materiel=$em->getRepository(VueMateriel::class)->findAll();
+
+            $render = $this->renderView('RenderRecherche.html.twig', [
+                                            'listeMateriel' => $Materiel
+                                        ]);
+
+            $arrData = ['tab' => $render,
+                        'output' => $request->request->get("query")
+                         ];
             return new JsonResponse($arrData);
         }
 
-        $Materiel = new Materiel();
-        $Materiel=$em->getRepository(Materiel::class)->findAll();
+        $Materiel = new VueMateriel();
+        $Materiel=$em->getRepository(VueMateriel::class)->findAll();
 
         return $this->render('TestRecherche.html.twig',
             array(
             "message" => "liste des Materiels",
-            "voitures" => $Materiel
+            "listeMateriel" => $Materiel
             ));
     }
 
@@ -131,12 +147,13 @@ class Test extends Controller
 
     /**
     *
-    * @Route("/listeMembres",name="listeMembres")
+    * @Route("listeMembres",name="listeMembres")
+    * @Security("has_role('ROLE_ADMIN'")
     */
     public function listeMembres()
     {
 
-        $tabMembre = $this->getDoctrine()->getRepository(Emprunteur::class)->findAll();
+        $tabMembre = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         return $this->render('AfficherListeMembres.html.twig',
             array(
@@ -144,6 +161,9 @@ class Test extends Controller
             "listeMembres" => $tabMembre
             ));
     }
+
+
+
 
     /**
     *
@@ -153,16 +173,16 @@ class Test extends Controller
     {
 
       $entityManager = $this->getDoctrine()->getManager();
-      $Mem = $this->getDoctrine()->getRepository(Emprunteur::class)->find($idMembres);
+      $Mem = $this->getDoctrine()->getRepository(User::class)->find($idMembres);
 
       $entityManager->remove($Mem);
       $entityManager->flush();
 
-      $tabMembre = $this->getDoctrine()->getRepository(Emprunteur::class)->findAll();
+      $tabMembre = $this->getDoctrine()->getRepository(User::class)->findAll();
 
       return $this->render('AfficherListeMembres.html.twig',
           array(
-          "message" => "liste des Materiels",
+          "message" => "liste des Membres",
           "listeMembres" => $tabMembre
           ));
 
