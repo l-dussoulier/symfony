@@ -148,7 +148,7 @@ class Test extends Controller
     /**
     *
     * @Route("listeMembres",name="listeMembres")
-    * @Security("has_role('ROLE_ADMIN'")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function listeMembres()
     {

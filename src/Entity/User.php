@@ -63,6 +63,16 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     *
+     */
+    private $role;
+
+
+
+    /**
       * @Assert\EqualTo(propertyPath="password", message="Erreur non identique")
      */
     public $confirm_password;
@@ -144,12 +154,24 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getRole(): ?string
+    {
+      return $this->role;
+    }
+    public function setRole(string $role): self
+    {
+      $this->role = $role;
+      return $this;
+    }
+
     public function eraseCredentials() {}
 
     public function getSalt() {}
 
     public function getRoles(){
-      return ['ROLE_ADMIN'];
+
+      $test = $this->role;
+      return explode(',', $test);
     }
 
 }
