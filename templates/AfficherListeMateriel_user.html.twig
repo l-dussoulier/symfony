@@ -20,7 +20,7 @@
     </head>
     <body class="container">
 
-    {% include 'nav.html' %}
+{% include 'nav-user.html' %}
     <div class="cont">
 
 
@@ -71,7 +71,7 @@
                                  </form>
                                </a>
 
-                          
+
                         </div>
 
             </td>
@@ -85,15 +85,6 @@
       	<script type="text/javascript">
 
 
-          function modif(id)
-          {
-            console.log(id);
-              var url = "{{path('modifMat', {idMat: ':idJ'})}}";
-              url = url.replace(":idJ",id);
-
-              location.href = url;
-
-          }
 
           function emprunter(id)
           {

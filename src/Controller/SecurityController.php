@@ -52,4 +52,7 @@ use Symfony\Component\HttpFoundation\Request;
           * @Route("/deconnexion", name="security_logout")
           */
           public function logout(){}
+
+
+      
 }

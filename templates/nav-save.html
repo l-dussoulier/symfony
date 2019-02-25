@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fixed Navigation Sidebar</title>
+  <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+
+  <script type="text/javascript">
+      $('button').on('click', function(e){
+        e.preventDefault();
+        $(this).toggleClass('is-expanded');
+      })
+  </script>
+      <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,700&subset=latin,greek);
+      * {
+        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+      }
+
+      html {
+        height: 100%;
+        font-size: 16px;
+      }
+
+      body {
+        height: 100%;
+        background: #F3F4F8;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: #3D7CD7;
+        box-shadow: inset 0 -1px 0 0 #edeef4;
+      }
+
+      #prout {
+        height: 100px;
+
+      }
+
+      sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 180px;
+        background: rgb(41,48,52);
+      }
+      sidebar .brand {
+        padding: 20px 20px 5px;
+      }
+      sidebar .brand a {
+        display: block;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        padding: 0;
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-style: italic;
+        text-align: center;
+        text-decoration: none !important;
+        line-height: 62px;
+        color: #EBEBEB;
+        background: #003b69;
+        border-radius: 100%;
+      }
+      sidebar button.app-menu__button {
+        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 15px;
+        padding: 14px;
+        background: none;
+        border: none;
+        border-radius: 100%;
+        outline: none !important;
+      }
+      sidebar button.app-menu__button:hover:not(.is-expanded) .app-icon__component:first-child {
+        -webkit-animation: moshpit-1 0.25s ease-in-out infinite alternate;
+                animation: moshpit-1 0.25s ease-in-out infinite alternate;
+      }
+      sidebar button.app-menu__button:hover:not(.is-expanded) .app-icon__component:nth-child(3) {
+        -webkit-animation: moshpit-2 0.25s ease-in-out infinite alternate;
+                animation: moshpit-2 0.25s ease-in-out infinite alternate;
+      }
+      sidebar button.app-menu__button:hover:not(.is-expanded) .app-icon__component:nth-child(7) {
+        -webkit-animation: moshpit-3 0.25s ease-in-out infinite alternate;
+                animation: moshpit-3 0.25s ease-in-out infinite alternate;
+      }
+      sidebar button.app-menu__button:hover:not(.is-expanded) .app-icon__component:nth-child(9) {
+        -webkit-animation: moshpit-4 0.25s ease-in-out infinite alternate;
+                animation: moshpit-4 0.25s ease-in-out infinite alternate;
+      }
+      sidebar button.app-menu__button .app-icon {
+        position: relative;
+        display: block;
+        width: 22px;
+        height: 22px;
+        margin: 0 0 0 0px;
+        padding: 0;
+        background: none;
+        border: none;
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component {
+        display: inline-block;
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #7a9ab6;
+        border-radius: 100%;
+        transition: background 0.2s ease-out, -webkit-transform 0.2s ease-out;
+        transition: transform 0.2s ease-out, background 0.2s ease-out;
+        transition: transform 0.2s ease-out, background 0.2s ease-out, -webkit-transform 0.2s ease-out;
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:first-child {
+        top: 2px;
+        left: 2px;
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(2) {
+        top: 2px;
+        left: 50%;
+        -webkit-transform: translate(-50%, 0);
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 0, 0);
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(3) {
+        top: 2px;
+        right: 2px;
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(4) {
+        top: 50%;
+        left: 2px;
+        -webkit-transform: translate(0, -50%);
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate(0, -50%);
+        transform: translate3d(0, -50%, 0);
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(5) {
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -webkit-transform: translate3d(-50%, -50%, 0);
+        transform: translate(-50%, -50%);
+        transform: translate3d(-50%, -50%, 0);
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(6) {
+        top: 50%;
+        right: 2px;
+        -webkit-transform: translate(0, -50%);
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate(0, -50%);
+        transform: translate3d(0, -50%, 0);
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(7) {
+        bottom: 2px;
+        left: 2px;
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(8) {
+        bottom: 2px;
+        left: 50%;
+        -webkit-transform: translate(-50%, 0);
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 0, 0);
+      }
+      sidebar button.app-menu__button .app-icon .app-icon__component:nth-child(9) {
+        bottom: 2px;
+        right: 2px;
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component {
+        background: rgba(185, 204, 220, 0.8);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:first-child {
+        -webkit-transform: translate(3px, 3px) scale(1);
+                transform: translate(3px, 3px) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(2) {
+        -webkit-transform: translate(calc(-50% - 9px), -1px) scale(1);
+                transform: translate(calc(-50% - 9px), -1px) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(3) {
+        -webkit-transform: translate(-3px, 3px) scale(1);
+                transform: translate(-3px, 3px) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(4) {
+        -webkit-transform: translate(-2px, calc(-50% + 8px)) scale(1);
+                transform: translate(-2px, calc(-50% + 8px)) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(5) {
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(6) {
+        -webkit-transform: translate(2px, calc(-50% - 8px)) scale(1);
+                transform: translate(2px, calc(-50% - 8px)) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(7) {
+        -webkit-transform: translate(3px, -3px) scale(1);
+                transform: translate(3px, -3px) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(8) {
+        -webkit-transform: translate(calc(-50% + 9px), 1px) scale(1);
+                transform: translate(calc(-50% + 9px), 1px) scale(1);
+      }
+      sidebar button.app-menu__button.is-expanded .app-icon__component:nth-child(9) {
+        -webkit-transform: translate(-3px, -3px) scale(1);
+                transform: translate(-3px, -3px) scale(1);
+      }
+      sidebar .menu-collapse {
+        display: block;
+        width: 100%;
+        padding: 6px 20px;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        text-align: left;
+        color: #FFFFFF;
+        background: none;
+        border: none;
+        outline: none !important;
+      }
+      sidebar .menu-collapse.collapsed .caret {
+        -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+      }
+      sidebar .menu-collapse .caret {
+        margin-right: 6px;
+        -webkit-transform-origin: center center;
+                transform-origin: center center;
+        transition: -webkit-transform 0.2s ease-in;
+        transition: transform 0.2s ease-in;
+        transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
+      }
+      sidebar nav {
+        max-height: calc(100vh - 145px);
+        overflow: auto;
+        /* Track */
+        /* Handle */
+      }
+      sidebar nav::-webkit-scrollbar {
+        width: 6px;
+      }
+      sidebar nav::-webkit-scrollbar-track {
+        border-radius: 10px;
+      }
+      sidebar nav::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #004983;
+      }
+      sidebar ul.nav {
+        margin-bottom: 25px;
+      }
+      sidebar ul.nav li a {
+        display: block;
+        position: relative;
+        padding-left: 50px;
+        font-size: 0.875rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.2px;
+        color: #BCBCBC;
+      }
+      sidebar ul.nav li a:hover {
+        color: rgba(185, 204, 220, 0.8);
+        background: none;
+      }
+      sidebar ul.nav li a:focus {
+        background: none;
+      }
+      sidebar ul.nav li a svg {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+        -webkit-transform: translate(0, -50%);
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate(0, -50%);
+        transform: translate3d(0, -50%, 0);
+      }
+      sidebar ul.nav li a .lnr-star {
+        margin-top: -1px;
+      }
+      sidebar ul.nav li a span {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        width: 20px;
+        height: 20px;
+        margin-left: -1px;
+        font-size: 1.5rem;
+        font-weight: 300;
+        text-align: center;
+        line-height: 1.1rem;
+        -webkit-transform: translate(0, -50%);
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate(0, -50%);
+        transform: translate3d(0, -50%, 0);
+      }
+      sidebar ul.nav li a:hover {
+        color: rgba(185, 204, 220, 0.8);
+        background: rgba(185, 204, 220, 0.1);
+      }
+
+      @-webkit-keyframes moshpit-1 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(-2px, -2px);
+          -webkit-transform: translate3d(-2px, -2px, 0);
+          transform: translate(-2px, -2px);
+          transform: translate3d(-2px, -2px, 0);
+        }
+      }
+
+      @keyframes moshpit-1 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(-2px, -2px);
+          -webkit-transform: translate3d(-2px, -2px, 0);
+          transform: translate(-2px, -2px);
+          transform: translate3d(-2px, -2px, 0);
+        }
+      }
+      @-webkit-keyframes moshpit-2 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(2px, -2px);
+          -webkit-transform: translate3d(2px, -2px, 0);
+          transform: translate(2px, -2px);
+          transform: translate3d(2px, -2px, 0);
+        }
+      }
+      @keyframes moshpit-2 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(2px, -2px);
+          -webkit-transform: translate3d(2px, -2px, 0);
+          transform: translate(2px, -2px);
+          transform: translate3d(2px, -2px, 0);
+        }
+      }
+      @-webkit-keyframes moshpit-3 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(-2px, 2px);
+          -webkit-transform: translate3d(-2px, 2px, 0);
+          transform: translate(-2px, 2px);
+          transform: translate3d(-2px, 2px, 0);
+        }
+      }
+      @keyframes moshpit-3 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(-2px, 2px);
+          -webkit-transform: translate3d(-2px, 2px, 0);
+          transform: translate(-2px, 2px);
+          transform: translate3d(-2px, 2px, 0);
+        }
+      }
+      @-webkit-keyframes moshpit-4 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(2px, 2px);
+          -webkit-transform: translate3d(2px, 2px, 0);
+          transform: translate(2px, 2px);
+          transform: translate3d(2px, 2px, 0);
+        }
+      }
+      @keyframes moshpit-4 {
+        from {
+          -webkit-transform: translate(0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate(0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          -webkit-transform: translate(2px, 2px);
+          -webkit-transform: translate3d(2px, 2px, 0);
+          transform: translate(2px, 2px);
+          transform: translate3d(2px, 2px, 0);
+        }
+      }
+
+      .deco {
+        margin-left: 2em;
+        margin-top: 1em;
+      }
+      .mess {
+        color: white;
+        margin-top: 1em;
+        margin-left: 2em;
+      }
+
+      </style>
+
+</head>
+
+<body>
+
+
+<sidebar>
+
+
+<div id="prout">
+
+        <div class="mess">
+          {{app.user.username}}
+          {{app.user.role}}
+
+
+        </div>
+        <div class="deco">
+            {% if not app.user %}
+    					<a class="btn btn-success" href="{{ path('security_login' )}}">Connexion</a>
+            {% else %}
+              <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
+            {% endif %}
+      </div>
+
+</div>
+
+	<nav>
+		<button class="menu-collapse" type="button" data-toggle="collapse" data-target="#myContent" aria-expanded="false" aria-controls="collapseExample">
+			<span class="caret"></span> Listes
+		</button>
+		<div class="collapse in" id="myContent">
+			<ul class="nav">
+				<li id="navListesMateriel">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/listeMateriel">
+						<svg class="lnr lnr-star"><use xlink:href="#lnr-star"></use></svg>
+						Materiel
+					</a>
+				</li>
+				<li id="navListesMembre">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/listeMembres">
+						<svg class="lnr lnr-eye"><use xlink:href="#lnr-eye"></use></svg>
+						Membre
+					</a>
+				</li>
+				<li id="navListesMarque">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/AffichageMarque">
+						<svg class="lnr lnr-tag"><use xlink:href="#lnr-tag"></use></svg>
+						Marque
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<button class="menu-collapse" type="button" data-toggle="collapse" data-target="#mainContent" aria-expanded="false" aria-controls="collapseExample">
+			<span class="caret"></span> Ajouter
+		</button>
+		<div class="collapse in" id="mainContent">
+			<ul class="nav">
+				<li id ="navAjouterMateriel">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/ajoutMat">
+						<svg class="lnr lnr-heart-pulse"><use xlink:href="#lnr-heart-pulse"></use></svg>
+						Materiel
+					</a>
+				</li>
+				<li id="navAjouterMarque">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/ajoutMarque">
+						<svg class="lnr lnr-download"><use xlink:href="#lnr-download"></use></svg>
+						Marque
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<button class="menu-collapse" type="button" data-toggle="collapse" data-target="#fundNavigation" aria-expanded="false" aria-controls="collapseExample">
+			<span class="caret"></span> Emprunts
+		</button>
+		<div class="collapse in" id="fundNavigation">
+			<ul class="nav">
+				<li id="EmpruntsEnCours">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/listeEmpruntEnCours">
+						<svg class="lnr lnr-heart-pulse"><use xlink:href="#lnr-heart-pulse"></use></svg>
+						En cours
+					</a>
+				</li>
+				<li id ="EmpruntsTerminees">
+					<a href="https://kroko.ovh/~soares/TestSymfony/public/index.php/AffichageEmpruntFin">
+						<svg class="lnr lnr-chart-bars"><use xlink:href="#lnr-chart-bars"></use></svg>
+						Terminées
+					</a>
+				</li>
+			</ul>
+
+		</div>
+	</nav>
+</sidebar>
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

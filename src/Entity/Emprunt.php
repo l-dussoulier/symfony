@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Emprunt
  *
- * @ORM\Table(name="emprunt", indexes={@ORM\Index(name="emprunt_emprunteur_FK", columns={"idEmprunteur"}), @ORM\Index(name="emprunt_Materiel2_FK", columns={"Id"})})
+ * @ORM\Table(name="emprunt", indexes={@ORM\Index(name="emprunt_emprunteur_FK", columns={"idUser"})})
  * @ORM\Entity
  */
 class Emprunt
@@ -45,6 +45,20 @@ class Emprunt
     /**
      * @var int|null
      *
+     * @ORM\Column(name="idUser", type="integer", nullable=true)
+     */
+    private $iduser;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idMateriel", type="integer", nullable=false)
+     */
+    private $idmateriel;
+
+    /**
+     * @var int|null
+     *
      * @ORM\Column(name="Statut_emprunt", type="integer", nullable=true)
      */
     private $statutEmprunt;
@@ -55,26 +69,6 @@ class Emprunt
      * @ORM\Column(name="Incident", type="string", length=1000, nullable=true)
      */
     private $incident;
-
-    /**
-     * @var \Materiel
-     *
-     * @ORM\ManyToOne(targetEntity="Materiel")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Id", referencedColumnName="Id")
-     * })
-     */
-    private $id;
-
-    /**
-     * @var \Emprunteur
-     *
-     * @ORM\ManyToOne(targetEntity="Emprunteur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idEmprunteur", referencedColumnName="idEmprunteur")
-     * })
-     */
-    private $idemprunteur;
 
     public function getIdemprunt(): ?int
     {
@@ -117,6 +111,30 @@ class Emprunt
         return $this;
     }
 
+    public function getIduser(): ?int
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?int $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getIdmateriel(): ?int
+    {
+        return $this->idmateriel;
+    }
+
+    public function setIdmateriel(int $idmateriel): self
+    {
+        $this->idmateriel = $idmateriel;
+
+        return $this;
+    }
+
     public function getStatutEmprunt(): ?int
     {
         return $this->statutEmprunt;
@@ -137,30 +155,6 @@ class Emprunt
     public function setIncident(?string $incident): self
     {
         $this->incident = $incident;
-
-        return $this;
-    }
-
-    public function getId(): ?Materiel
-    {
-        return $this->id;
-    }
-
-    public function setId(?Materiel $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getIdemprunteur(): ?Emprunteur
-    {
-        return $this->idemprunteur;
-    }
-
-    public function setIdemprunteur(?Emprunteur $idemprunteur): self
-    {
-        $this->idemprunteur = $idemprunteur;
 
         return $this;
     }

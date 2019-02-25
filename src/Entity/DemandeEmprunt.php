@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DemandeEmprunt
  *
- * @ORM\Table(name="demande_emprunt")
+ * @ORM\Table(name="demande_emprunt", indexes={@ORM\Index(name="fk344343", columns={"id_user"}), @ORM\Index(name="fk3434", columns={"id_materiel"}), @ORM\Index(name="fk656565", columns={"statut"})})
  * @ORM\Entity
  */
 class DemandeEmprunt
@@ -22,30 +22,39 @@ class DemandeEmprunt
     private $id;
 
     /**
-     * @var int|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="id_membre", type="integer", nullable=true)
+     * @ORM\Column(name="date_demande", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $idMembre;
+    private $dateDemande = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \DateTime|null
+     * @var \Materiel
      *
-     * @ORM\Column(name="date_demande", type="date", nullable=true)
-     */
-    private $dateDemande;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id_materiel", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Materiel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_materiel", referencedColumnName="Id")
+     * })
      */
     private $idMateriel;
 
     /**
-     * @var int|null
+     * @var \User
      *
-     * @ORM\Column(name="statut", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+    /**
+     * @var \StatutDemandeEmprunt
+     *
+     * @ORM\ManyToOne(targetEntity="StatutDemandeEmprunt")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="statut", referencedColumnName="id")
+     * })
      */
     private $statut;
 
@@ -54,48 +63,48 @@ class DemandeEmprunt
         return $this->id;
     }
 
-    public function getIdMembre(): ?int
-    {
-        return $this->idMembre;
-    }
-
-    public function setIdMembre(?int $idMembre): self
-    {
-        $this->idMembre = $idMembre;
-
-        return $this;
-    }
-
     public function getDateDemande(): ?\DateTimeInterface
     {
         return $this->dateDemande;
     }
 
-    public function setDateDemande(?\DateTimeInterface $dateDemande): self
+    public function setDateDemande(\DateTimeInterface $dateDemande): self
     {
         $this->dateDemande = $dateDemande;
 
         return $this;
     }
 
-    public function getIdMateriel(): ?int
+    public function getIdMateriel(): ?Materiel
     {
         return $this->idMateriel;
     }
 
-    public function setIdMateriel(?int $idMateriel): self
+    public function setIdMateriel(?Materiel $idMateriel): self
     {
         $this->idMateriel = $idMateriel;
 
         return $this;
     }
 
-    public function getStatut(): ?int
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?User $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getStatut(): ?StatutDemandeEmprunt
     {
         return $this->statut;
     }
 
-    public function setStatut(?int $statut): self
+    public function setStatut(?StatutDemandeEmprunt $statut): self
     {
         $this->statut = $statut;
 
