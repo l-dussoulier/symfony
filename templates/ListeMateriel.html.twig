@@ -14,33 +14,52 @@
         <script>
                     $(document).ready(function(){
                     	load_data();
-                    	function load_data(query)
+
+                      function load_data(recherche,marque,categ)
                     	{
-                        console.log(query);
-                    		$.ajax({
+                        console.log(recherche);
+                        console.log(marque);
+                        console.log(categ);
+
+                        $.ajax({
                           type: "POST",
-                          url: "{{ path('TestRecherche')}}",
-                    			data:{"query":query},
-                    			success:function(data)
-                    			{
+                          url: "{{ path('RechercheAjax')}}",
+                          data:{"Recherche":recherche,
+                                "Marque":marque,
+                                "Categorie":categ
+                               },
+                          success:function(data)
+                          {
                             console.log(data);
                             $('#output').html(data.output);
-                    				$('#tab2').html(data.tab);
-                    			}
-                    		});
+                            $('#tab2').html(data.tab);
+                          }
+                        });
                     	}
 
-                    	$('#search_text').keyup(function(){
-                    		var search = $(this).val();
-                    		if(search != '')
-                    		{
-                    			load_data(search);
-                    		}
-                    		else
-                    		{
-                    			load_data();
-                    		}
+                      function recupValeurs(){
+                        var valeurRecherche = $("#form_Rechercher").val();
+                        var valeurMarque = $("#form_Marque").val(); // on récupère la value de l'option selectionnée
+                        var valeurCategorie = $("#form_Categorie").val();
+
+                        if(!($.isNumeric(valeurMarque)))
+                         valeurMarque = "-1";
+
+                        if(!($.isNumeric(valeurCategorie)))
+                         valeurCategorie = "-1";
+
+                        load_data(valeurRecherche,valeurMarque,valeurCategorie);
+
+                      }
+
+                      $('#form_Rechercher').keyup(function(){
+                        recupValeurs();
                     	});
+
+                      $(".form-control").change(function(){
+                        recupValeurs();
+                      });
+
                     });
         </script>
 
@@ -83,18 +102,14 @@
         background: rgba(185, 204, 220, 0.1);
       }
 
-      .cont{
-        padding-left: 20em;
-        padding-right: 6em;
-
-      }
     </style>
     </head>
     <body>
 
+      {% include 'css.html.twig' %}
+      {% include 'nav-save.html' %}
 
     <div class="cont">
-        {% include 'nav.html' %}
         <br>
         <h1 class="text-primary">{{message}}</h1>
         <br>
@@ -108,10 +123,11 @@
          <div class="panel-body">
            <h2>Filtres</h2>
            <br>
-           <p>Rechercher:  <input type="text" name="search_text" id="search_text" placeholder="Rechercher un Materiel" class="form-control" /> </p>
-           <p>Marque: </p>
-           <p>Etat: </p>
-           <p>Catégorie</p>
+
+           {{ form_start(formulaire) }}
+           {{ form_widget(formulaire) }}
+           {{ form_end(formulaire) }}
+
         </div>
        </div>
       <br>
@@ -128,10 +144,10 @@
         {% for Materiel in listeMateriel %}
           <tr>
             <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> {{Materiel.id}} </td>
-            <td>{{Materiel.categorie}} </td>
-            <td>{{Materiel.marque}} </td>
+    				<td>{{Materiel.categorie.nomcat}} </td>
+            <td>{{Materiel.marque.libelle}} </td>
             <td>{{Materiel.description}} </td>
-            <td>{{Materiel.etat}} </td>
+            <td>{{Materiel.etat.libelle}} </td>
 
 
             <td>
@@ -158,7 +174,7 @@
                                {% else %}
                               {% endif %} -->
                         </div>
-
+                      </div>
             </td>
 
             </tr>

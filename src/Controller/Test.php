@@ -10,6 +10,11 @@ use App\Entity\VueMateriel;
 use App\Entity\Materiel;
 use App\Entity\User;
 use App\Entity\Emprunt;
+use App\Entity\Categorie;
+use App\Entity\Etat;
+use App\Entity\Marque;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use   Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -27,12 +32,12 @@ class Test extends Controller
 {
     /**
     *
-    * @Route("/listeMateriel",name="listeMateriel")
+    * @Route("/listeMaterielBasique",name="listeMaterielBasique")
     */
-    public function listeMateriel()
+    public function listeMaterielBasique()
     {
 
-        $tabMateriel = $this->getDoctrine()->getRepository(VueMateriel::class)->findAll();
+        $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
 
         return $this->render('salut.html.twig',
   		    	array(
@@ -41,86 +46,74 @@ class Test extends Controller
   		    	));
     }
 
-
     /**
     *
-    * @Route("/TestRecherche",name="TestRecherche")
+    * @Route("/listeMateriel",name="listeMateriel")
     */
-    function TestRecherche(Request $request)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        if($request->isXmlHttpRequest()){
-            if ($request->request->get("query")) {
-                $tabMateriel = $this->getDoctrine()->getRepository(VueMateriel::class)->MaterielById($request->request->get("query"));
-
-                $render = $this->renderView('RenderRecherche.html.twig', [
-                                                'listeMateriel' => $tabMateriel
-                                            ]);
-
-                $arrData = ['tab' => $render,
-                            'output' => $request->request->get("query")
-                             ];
-                return new JsonResponse($arrData);
-            }
-
-            $Materiel = new VueMateriel();
-            $Materiel=$em->getRepository(VueMateriel::class)->findAll();
-
-            $render = $this->renderView('RenderRecherche.html.twig', [
-                                            'listeMateriel' => $Materiel
-                                        ]);
-
-            $arrData = ['tab' => $render,
-                        'output' => $request->request->get("query")
-                         ];
-            return new JsonResponse($arrData);
-        }
-
-        $Materiel = new VueMateriel();
-        $Materiel=$em->getRepository(VueMateriel::class)->findAll();
-
-        return $this->render('TestRecherche.html.twig',
-            array(
-            "message" => "liste des Materiels",
-            "listeMateriel" => $Materiel
-            ));
-    }
-
-    /**
-    *
-    * @Route("/TestRecherche1",name="TestRecherche1")
-    */
-    public function TestRecherche1(Request $request)
+    function listeMateriel(Request $request)
     {
       $em = $this->getDoctrine()->getManager();
-      $tabMateriel = $em->getRepository(VueMateriel::class)->findAll();
 
-      if($request->isXmlHttpRequest()){
+      $formulaire = $this->createFormBuilder()
+      ->add('Rechercher', TextType::class, array("label"=> "Rechercher : "))
+      ->add('Marque', EntityType::class, array(
+          'class' => Marque::class,
+          'choice_label' => 'libelle',
+          'placeholder' => 'sélectionner une marque',
 
-          return new JsonResponse($request->query->getAlnum('filter'));
-      }
+      ))
+      ->add('Categorie', EntityType::class, array(
+          'class' => categorie::class,
+          'choice_label' => 'NomCat',
+          'placeholder' => 'sélectionner une categorie',
 
-      return $this->render('TestRecherche.html.twig');
+      ))
+      ->getForm();
 
+
+      return $this->render('ListeMateriel.html.twig',
+            array(
+                "message" => "liste des Materiels",
+                "formulaire" => $formulaire->createView()
+              )
+          );
     }
-
 
     /**
     *
-    * @Route("/indexAction",name="indexAction")
+    * @Route("/RechercheAjax",name="RechercheAjax")
     */
-    public function indexAction(Request $request)
+    function RechercheAjax(Request $request)
     {
-        if($request->request->get('some_var_name')){
-            //make something curious, get some unbelieveable data
-            $arrData = ['output' => 'here the result which will appear in div'];
-            return new JsonResponse($arrData);
-        }
 
-        return $this->render('TestRechercheQuiMarche.html.twig');
-    }
+      $em = $this->getDoctrine()->getManager();
+
+          if ($request->request->get("Recherche") || $request->request->get("Marque") || $request->request->get("Categorie")){
+              $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)
+                                  ->MaterielById($request->request->get("Recherche"),$request->request->get("Marque"),$request->request->get("Categorie"));
+
+              $render = $this->renderView('RenderRecherche.html.twig', [
+                                              'listeMateriel' => $tabMateriel
+                                          ]);
+
+              $arrData = ['tab' => $render,
+                          'output' => $request->request->get("query")
+                           ];
+              return new JsonResponse($arrData);
+          }
+
+
+          $Materiel=$em->getRepository(Materiel::class)->findAll();
+
+          $render = $this->renderView('RenderRecherche.html.twig', [
+                                          'listeMateriel' => $Materiel
+                                      ]);
+
+          $arrData = ['tab' => $render,
+                      'output' => $request->request->get("query")
+                       ];
+          return new JsonResponse($arrData);
+  }
 
     /**
     *

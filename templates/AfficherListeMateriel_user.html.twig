@@ -41,6 +41,7 @@
           <td><b>Marque</b></td>
           <td><b>Description</b></td>
           <td><b>état</b></td>
+          <td><b></b></td>
           <td style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> </td>
         </tr>
     		{% for Materiel in listeMateriel %}
@@ -53,29 +54,11 @@
 
 
             <td>
-                     <div class="dropdown">
-
-                         <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
-
-                            <div class="dropdown-menu">
-
-                               <a class="dropdown-item">
-                                 <form  action="{{ path('effacerMateriel', {idMateriel: Materiel.id}) }}" >
-                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
-                                 </form>
-                               </a>
-
-                               <a class="dropdown-item">
-                                 <form  action="{{ path('modifMat', {idMat: Materiel.id}) }}" >
-                                   <button  class="btn btn-info"><i class="fas fa-pen"></i>  Editer</button>
-                                 </form>
-                               </a>
-
-
-                        </div>
+                    <form  action="{{ path('DemandeEmprunt', {'idMat': '{{Materiel.id}}','idUser':'{{app.user.id}}' }) }}" >
+                       <button  class="btn btn-primary"><i class="fas fa-arrow-alt-circle-down"></i> Emprunter</button>
+                    </form>
 
             </td>
-
             </tr>
     		{% endfor %}
     	</table>
@@ -86,20 +69,8 @@
 
 
 
-          function emprunter(id)
-          {
-            console.log(id);
-            var url = "{{path('CreerNouveauEmprunt', {idMat: ':idJ'})}}";
-            url = url.replace(":idJ",id);
+        
 
-            location.href = url;
-
-          }
-
-          function traiterRepJ1(donnees)
-          {
-            console.log(donnees);
-          }
 
 
         </script>

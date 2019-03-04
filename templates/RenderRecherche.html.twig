@@ -14,10 +14,10 @@
   {% for Materiel in listeMateriel %}
     <tr>
       <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> {{Materiel.id}} </td>
-      <td>{{Materiel.categorie}} </td>
-      <td>{{Materiel.marque}} </td>
+      <td>{{Materiel.categorie.nomcat}} </td>
+      <td>{{Materiel.marque.libelle}} </td>
       <td>{{Materiel.description}} </td>
-      <td>{{Materiel.etat}} </td>
+      <td>{{Materiel.etat.libelle}} </td>
 
 
       <td>

@@ -9,22 +9,21 @@
     </head>
 
 
-    {% include 'nav.html' %}
+    {% include 'css.html.twig' %}
+    {% include 'nav-save.html' %}
     <style>
       #navAjouterMarque  {
         color: rgba(185, 204, 220, 0.8);
         background: rgba(185, 204, 220, 0.1);
       }
-      .petit {
-          width: 20em;
-      }
+
     </style>
 
     <body class="container">
 
-      	<h1 class="text-primary">Ajouter une marque</h1>
-        <div class="petit">
 
+        <div class="cont">
+          <h1 class="text-primary">Ajouter une marque</h1>
             {{ form_start(formulaire) }}
             {{ form_widget(formulaire) }}
             {{ form_end(formulaire) }}

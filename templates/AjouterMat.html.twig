@@ -8,20 +8,18 @@
     </head>
 
 
-    {% include 'nav.html' %}
+    {% include 'css.html.twig' %}
+    {% include 'nav-save.html' %}
     <style>
       #navAjouterMateriel  {
         color: rgba(185, 204, 220, 0.8);
         background: rgba(185, 204, 220, 0.1);
       }
-      .petit {
-          width: 20em;
-          margin: auto;
-      }
+
     </style>
 
     <body class="container">
-      <div class="petit">
+      <div class="cont">
     	   <h1 class="text-primary">Ajout matériel</h1>
           {{ form_start(formulaire) }}
           {{ form_widget(formulaire) }}
