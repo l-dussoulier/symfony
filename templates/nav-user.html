@@ -14,7 +14,6 @@
             .nav_decco {
               position: absolute;
               right: 8em;
-
             }
         </style>
     </head>
@@ -39,7 +38,7 @@
 
 
 
-{% if  app.user %}
+          {% if  app.user %}
             <div class="nav_decco">
             <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
             </div>

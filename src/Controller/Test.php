@@ -182,22 +182,7 @@ class Test extends Controller
     }
 
 
-    /**
-    *
-    * @Route("/listeEmpruntEnCours",name="listeEmprunt")
-    */
-    public function listeEmpruntEnCours()
-    {
-
-        $tabEmprunt = $this->getDoctrine()->getRepository(Emprunt::class)->findAll();
-
-        return $this->render('AfficherListeEmprunt.html.twig',
-            array(
-            "message" => "liste des Emprunt En Cours",
-            "listeEmprunt" => $tabEmprunt
-           ));
-    }
-
+  
 
     /**
      * @Route("/retourEmprunt/{idEmprunt}", name="retourEmprunt")

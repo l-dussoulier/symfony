@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\VueMateriel;
+use App\Entity\Materiel;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -31,7 +31,7 @@ class TestController extends Controller
     public function user()
     {
 
-          $tabMateriel = $this->getDoctrine()->getRepository(VueMateriel::class)->findAll();
+          $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->CheckStatut(false);
 
           return $this->render('AfficherListeMateriel_user.html.twig',
     		    	array(
@@ -40,7 +40,7 @@ class TestController extends Controller
     		    	));
       }
 
-      
+
 
 
 

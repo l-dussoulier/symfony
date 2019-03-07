@@ -38,15 +38,13 @@
         background: #3D7CD7;
         box-shadow: inset 0 -1px 0 0 #edeef4;
       }
-      #prout {
-        height: 100px;
-      }
+
       sidebar {
         position: fixed;
-        top: 0;
+        top: 50px;
         left: 0;
         bottom: 0;
-        width: 180px;
+        width: 200px;
         background: rgb(41,48,52);
       }
       sidebar .brand {
@@ -424,16 +422,24 @@
           transform: translate3d(2px, 2px, 0);
         }
       }
-      .deco {
+      .BoutonsConnexion {
         margin-left: 2em;
         margin-top: 1em;
       }
-      .mess {
+      .InfosConnexion {
         color: white;
         margin-top: 1em;
         margin-left: 2em;
       }
 
+      #navTopFixe {
+        height: 50px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: pink;
+      }
 
       </style>
 
@@ -441,28 +447,23 @@
 
 <body>
 
+  <div id="navTopFixe">
+
+          <div class="InfosConnexion">
+            {{app.user.username}}
+            {{app.user.role}}
+          </div>
+
+          <div class="BoutonsConnexion">
+              {% if not app.user %}
+                <a class="btn btn-success" href="{{ path('security_login' )}}">Connexion</a>
+              {% else %}
+                <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
+              {% endif %}
+        </div>
+  </div>
 
 <sidebar>
-
-
-<div id="prout">
-
-        <div class="mess">
-          {{app.user.username}}
-          {{app.user.role}}
-
-
-        </div>
-        <div class="deco">
-            {% if not app.user %}
-    					<a class="btn btn-success" href="{{ path('security_login' )}}">Connexion</a>
-            {% else %}
-              <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
-            {% endif %}
-      </div>
-
-</div>
-
 	<nav>
 		<button class="menu-collapse" type="button" data-toggle="collapse" data-target="#myContent" aria-expanded="false" aria-controls="collapseExample">
 			<span class="caret"></span> Listes
@@ -534,11 +535,6 @@
 </sidebar>
   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
-
-
-
-
-
 
 
 

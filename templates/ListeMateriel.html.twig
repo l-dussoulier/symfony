@@ -17,9 +17,6 @@
 
                       function load_data(recherche,marque,categ)
                     	{
-                        console.log(recherche);
-                        console.log(marque);
-                        console.log(categ);
 
                         $.ajax({
                           type: "POST",
@@ -92,7 +89,6 @@
             console.log(donnees);
           }
 
-
         </script>
 
     </head>
@@ -124,9 +120,7 @@
            <h2>Filtres</h2>
            <br>
 
-           {{ form_start(formulaire) }}
-           {{ form_widget(formulaire) }}
-           {{ form_end(formulaire) }}
+           {{ form(formulaire) }}
 
         </div>
        </div>

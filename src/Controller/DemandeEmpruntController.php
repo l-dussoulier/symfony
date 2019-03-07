@@ -18,16 +18,18 @@ class DemandeEmpruntController extends Controller
 {
     /**
     *
-    * @Route("/DemandeEmprunt",name="DemandeEmprunt")
+    * @Route("/DemandeEmprunt/{id}",name="DemandeEmprunt")
     */
 
 
-    public function demande(Request $request, $idMat, $idUser)
+    public function demande(Request $request, $id)
     {
 
+
       $em = $this->getDoctrine()->getManager();
-      //$idUser = 2;
-      //$idMat = 45;
+      $usr = $this->get('security.token_storage')->getToken()->getUser()->getId();
+      $idUser = $usr;
+      $idMat = $id;
       $idStatut = 0;
 
       // récupération User
@@ -38,7 +40,9 @@ class DemandeEmpruntController extends Controller
       // récupération du matériel
       $repoMat = $this->getDoctrine()
                       ->getRepository(Materiel::class);
-      $mat = $repoMat->find($idMat);
+      $mat = $repoMat->find($idMat)
+                      ->setStatutemprunt(true);
+
 
       // récupération du statut
       $repoSt = $this->getDoctrine()
@@ -55,11 +59,11 @@ class DemandeEmpruntController extends Controller
       $em->flush();
 
       $em->persist($demande);
+      $em->persist($mat);
 
-     // actually executes the queries (i.e. the INSERT query)
-     $em->flush();
+    // mettre statut emprunt a 1
 
-     return new Response('Test '.$demande->getId());
+       return $this->redirectToRoute('bienvenue');
 
 
 

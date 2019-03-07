@@ -47,14 +47,14 @@
     		{% for Materiel in listeMateriel %}
     			<tr>
     				<td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> {{Materiel.id}} </td>
-    				<td>{{Materiel.categorie}} </td>
-            <td>{{Materiel.marque}} </td>
+    				<td>{{Materiel.categorie.NomCat}} </td>
+            <td>{{Materiel.marque.libelle}} </td>
             <td>{{Materiel.description}} </td>
-            <td>{{Materiel.etat}} </td>
+            <td>{{Materiel.etat.libelle}} </td>
 
 
             <td>
-                    <form  action="{{ path('DemandeEmprunt', {'idMat': '{{Materiel.id}}','idUser':'{{app.user.id}}' }) }}" >
+                    <form  action="{{ path('DemandeEmprunt', {id : Materiel.id}) }}">
                        <button  class="btn btn-primary"><i class="fas fa-arrow-alt-circle-down"></i> Emprunter</button>
                     </form>
 
@@ -69,7 +69,6 @@
 
 
 
-        
 
 
 
