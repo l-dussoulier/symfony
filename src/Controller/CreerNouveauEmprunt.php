@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use App\Entity\Emprunt;
-use App\Entity\Emprunteur;
+use App\Entity\DemandeEmprunt;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -88,4 +88,22 @@ class CreerNouveauEmprunt extends Controller
 
 
         }
+
+
+        /**
+        *
+        * @Route("/listeDemandeEmprunt",name="listeDemandeEmprunt")
+        */
+        public function listeDemandeEmprunt()
+        {
+
+            $tabEmprunt = $this->getDoctrine()->getRepository(DemandeEmprunt::class)->FindAll();
+
+            return $this->render('AfficherListeDemandeEmprunt.html.twig',
+                array(
+                "message" => "liste des demande d'emprunt",
+                "listeDemande" => $tabEmprunt
+               ));
+        }
+
 }

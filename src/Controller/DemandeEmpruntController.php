@@ -13,6 +13,7 @@ use App\Entity\DemandeEmprunt;
 use App\Entity\User;
 use App\Entity\Materiel;
 use App\Entity\StatutDemandeEmprunt;
+use App\Entity\Emprunt;
 
 class DemandeEmpruntController extends Controller
 {
@@ -61,6 +62,8 @@ class DemandeEmpruntController extends Controller
       $em->persist($demande);
       $em->persist($mat);
 
+
+
     // mettre statut emprunt a 1
 
        return $this->redirectToRoute('bienvenue');
@@ -68,6 +71,37 @@ class DemandeEmpruntController extends Controller
 
 
 
+
+    }
+
+    /**
+    *
+    * @Route("/refuser/{id}",name="refuser")
+    */
+    public function refuser(Request $request, $id)
+    {
+      $idStatut = 2;
+
+      $em = $this->getDoctrine()->getManager();
+
+      $repoSt = $this->getDoctrine()
+                      ->getRepository(StatutDemandeEmprunt::class);
+      $statut = $repoSt->find($idStatut);
+
+
+      $action = $this->getDoctrine()
+                      ->getRepository(DemandeEmprunt::class);
+      $mat = $action->find($id)
+                      ->setStatut($statut);
+
+                      $em->flush();
+
+                      $em->persist($mat);
+
+      // mise statutEmprunt à 0
+      
+
+      return $this->redirectToRoute('bienvenue');
 
     }
 

@@ -34,15 +34,11 @@
 
             </li>
 
-
-
-
-
-          {% if  app.user %}
-            <div class="nav_decco">
-            <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
-            </div>
-          {% endif %}
+              {% if  app.user %}
+                <div class="nav_decco">
+                <a class="btn btn-danger" href="{{ path('security_logout' )}}">Déconnexion</a>
+                </div>
+              {% endif %}
           </ul>
         </div>
       </nav>

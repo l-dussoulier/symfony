@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Materiel;
+use App\Entity\DemandeEmprunt;
 use Doctrine\ORM\EntityRepository;
 
 class MaterielRepository extends EntityRepository
@@ -19,6 +20,20 @@ class MaterielRepository extends EntityRepository
 
     return $qb;
   }
+
+  // trier les demande emprunt qui sont refuser
+  public function StatById(int $statut)
+  {
+    $qb = $this->createQueryBuilder('q')
+        ->andWhere('q.statut = :statut')
+        ->setParameter('statut', $statut)
+        ->orderBy('q.id', 'ASC')
+        ->getQuery()
+        ->getResult();
+
+    return $qb;
+  }
+
 
   public function MaterielById(string $search, int $idMarque, int $idCategorie)
   {
