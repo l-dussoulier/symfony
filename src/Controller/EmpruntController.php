@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,63 +21,6 @@ use App\Entity\StatutDemandeEmprunt;
 
 class EmpruntController extends Controller
 {
-  /**
-  * @Route("/CreerNouveauEmprunt/{idMat}", name="CreerNouveauEmprunt")
-  */
-  public function CreerNouveauEmprunt(Request $request, $idMat) // paramètre qui donnera accès aux données saisies
-  {
-
-
-    // On crée une instance, associée au formulaire
-    $unMat = $this->getDoctrine()->getRepository(Materiel::class)->find($idMat);
-
-    $emprunt = new Emprunt();
-
-    // partie "création"
-    $formulaire = $this->createFormBuilder($emprunt)
-    ->add("dateretourdemander", DateType::class, array("label"=>"Date retour","widget" => "choice"))
-    ->add('idEmprunteur', EntityType::class, array(
-      'class' => Emprunteur::class,
-      'choice_label' => 'Nom',
-      'placeholder' => 'sélectionner un emprunteur',
-
-    ))
-
-    ->add("valider", SubmitType::class,array("label"=> "Emprunter"))
-    ->getForm();
-
-    // partie "gestion de la réponse"
-    $formulaire->handleRequest($request);
-
-    // est-ce que les champs remplis ont été envoyé au serveur ?
-    // si oui, on place les données dans l'instance de Joueur
-    if ($formulaire->isSubmitted() && $formulaire->isValid())
-    {
-      // récupération des données
-      $unMat->setStatutemprunt(true);
-
-      $emprunt->setDatepret(new \DateTime('now'));
-      $emprunt->setId($unMat);
-      $emprunt = $formulaire->getData();
-
-      // enregistrement dans la base
-      $this->getDoctrine()->getManager()->persist($emprunt);
-      $this->getDoctrine()->getManager()->persist($unMat);
-      $this->getDoctrine()->getManager()->flush();
-
-      return $this->redirectToRoute('listeMateriel');
-    }
-
-
-
-    return $this->render('CreerNouveauEmprunt.html.twig',
-    array(
-      "formulaire" => $formulaire->createView()
-    )
-  );
-
-
-}
 
 
 /**
@@ -87,13 +29,13 @@ class EmpruntController extends Controller
 */
 public function listeDemandeEmprunt()
 {
-
-  $tabEmprunt = $this->getDoctrine()->getRepository(DemandeEmprunt::class)->FindAll();
+  $objStatut = $this->getDoctrine()->getRepository(DemandeEmprunt::class)->checkIdStatutEmprunt(0);
+  //$tabEmprunt = $this->getDoctrine()->getRepository(DemandeEmprunt::class)->Find($objStatut);
 
   return $this->render('AfficherListeDemandeEmprunt.html.twig',
   array(
     "message" => "liste des demande d'emprunt",
-    "listeDemande" => $tabEmprunt
+    "listeDemande" => $objStatut
   ));
 }
 
@@ -101,8 +43,6 @@ public function listeDemandeEmprunt()
 *
 * @Route("/DemandeEmprunt/{id}",name="DemandeEmprunt")
 */
-
-
 public function demande(Request $request, $id)
 {
 
@@ -122,7 +62,7 @@ public function demande(Request $request, $id)
   $repoMat = $this->getDoctrine()
   ->getRepository(Materiel::class);
   $mat = $repoMat->find($idMat)
-  ->setStatutemprunt(true);
+  ->setStatutemprunt(true); // affectation true
 
 
   // récupération du statut
@@ -137,10 +77,12 @@ public function demande(Request $request, $id)
   $demande->setIdMateriel($mat);
   $demande->setStatut($statut);
   $demande->setDateDemande(new \DateTime());
-  $em->flush();
+
 
   $em->persist($demande);
   $em->persist($mat);
+  $em->flush();
+
 
 
 
@@ -165,23 +107,28 @@ public function refuser(Request $request, $id)
   $em = $this->getDoctrine()->getManager();
 
   $repoSt = $this->getDoctrine()
-  ->getRepository(StatutDemandeEmprunt::class);
+                 ->getRepository(StatutDemandeEmprunt::class);
   $statut = $repoSt->find($idStatut);
 
 
   $action = $this->getDoctrine()
-  ->getRepository(DemandeEmprunt::class);
-  $mat = $action->find($id)
-  ->setStatut($statut);
+                 ->getRepository(DemandeEmprunt::class);
+  $emprunt = $action->find($id)
+                ->setStatut($statut);
 
-  $em->flush();
+
+                $mat = $emprunt->getIdMateriel()
+                                ->setStatutemprunt(false);
+
 
   $em->persist($mat);
+  $em->persist($emprunt);
 
+  $em->flush();
   // mise statutEmprunt à 0
 
 
-  return $this->redirectToRoute('bienvenue');
+  return $this->redirectToRoute('listeDemandeEmprunt');
 
 }
 /**

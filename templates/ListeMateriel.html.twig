@@ -61,35 +61,7 @@
         </script>
 
         <!-- gestion boutons -->
-        <script type="text/javascript">
-
-
-          function modif(id)
-          {
-            console.log(id);
-              var url = "{{path('modifMat', {idMat: ':idJ'})}}";
-              url = url.replace(":idJ",id);
-
-              location.href = url;
-
-          }
-
-          function emprunter(id)
-          {
-            console.log(id);
-            var url = "{{path('CreerNouveauEmprunt', {idMat: ':idJ'})}}";
-            url = url.replace(":idJ",id);
-
-            location.href = url;
-
-          }
-
-          function traiterRepJ1(donnees)
-          {
-            console.log(donnees);
-          }
-
-        </script>
+      
 
     </head>
     <style>
