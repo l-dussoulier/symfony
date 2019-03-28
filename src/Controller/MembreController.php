@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class MembreController extends Controller
@@ -80,6 +81,7 @@ class MembreController extends Controller
 
           /**
            * @Route("/modifMem/{idMembre}", name="modifMembre")
+           * @Security("has_role('ROLE_ADMIN')")
            */
           public function modifMembre(Request $request,$idMembre) // paramètre qui donnera accès aux données saisies
           {
@@ -133,6 +135,7 @@ class MembreController extends Controller
           /**
           *
           * @Route("listeMembres",name="listeMembres")
+          * @Security("has_role('ROLE_ADMIN')")
           */
           public function listeMembres()
           {
@@ -158,10 +161,35 @@ class MembreController extends Controller
     		    	));
       }
 
+      /**
+      *
+      * @Route("/listeUserMobile",name="listeUserMobile")
+      */
+      public function userMobile()
+      {
+            $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
+            $data = [];
+
+            foreach ($tabMateriel as $unMat) {
+                  $ligne = [];
+                  $ligne['ID'] = $unMat->getId();
+                  $ligne['Categorie'] = $unMat->getCategorie()->getNomcat();
+                  $ligne['Marque'] = $unMat->getMarque()->getLibelle();
+                  $ligne['Description'] = $unMat->getDescription();
+                  $ligne['Etat'] = $unMat->getEtat()->getLibelle();
+
+                  $data[] = $ligne;
+            }
+
+            return new JsonResponse($data);
+
+        }
+
 
             /**
             *
             * @Route("/effacerMembres/{idMembres}", name="effacerMembres")
+            * @Security("has_role('ROLE_ADMIN')")
             */
             public function effacerMembres($idMembres)
             {

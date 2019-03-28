@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use App\Entity\User;
-use   Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 //------------------------------------------------------
 // supplément pour le formulaire
@@ -31,6 +31,7 @@ class MaterielController extends Controller
 
     /**
      * @Route("/ajoutMat", name="ajoutMat")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function ajoutMat(Request $request) // paramètre qui donnera accès aux données saisies
     {
@@ -96,6 +97,7 @@ class MaterielController extends Controller
 
           /**
            * @Route("/modifMat/{idMat}", name="modifMat")
+           * @Security("has_role('ROLE_ADMIN')")
            */
           public function modifMat(Request $request,$idMat) // paramètre qui donnera accès aux données saisies
           {
@@ -148,22 +150,23 @@ class MaterielController extends Controller
                  $this->getDoctrine()->getManager()->persist($unMat);
                  $this->getDoctrine()->getManager()->flush();
 
-                                return $this->redirectToRoute('listeMateriel');
+                 return $this->redirectToRoute('listeMateriel');
              }
 
 
 
-                return $this->render('ModifMat.html.twig',
-                      array(
-                          "formulaire" => $formulaire->createView()
-                        )
-                    );
+            return $this->render('ModifMat.html.twig',
+                  array(
+                      "formulaire" => $formulaire->createView()
+                    )
+                );
 
 
-                }
+          }
                 /**
                 *
                 * @Route("/listeMaterielBasique",name="listeMaterielBasique")
+                * @Security("has_role('ROLE_ADMIN')")
                 */
                 public function listeMaterielBasique()
                 {
@@ -180,6 +183,7 @@ class MaterielController extends Controller
                 /**
                 *
                 * @Route("/listeMateriel",name="listeMateriel")
+                * @Security("has_role('ROLE_ADMIN')")
                 */
                 function listeMateriel(Request $request)
                 {
@@ -213,42 +217,44 @@ class MaterielController extends Controller
                 /**
                 *
                 * @Route("/RechercheAjax",name="RechercheAjax")
+                * @Security("has_role('ROLE_ADMIN')")
                 */
                 function RechercheAjax(Request $request)
                 {
 
                   $em = $this->getDoctrine()->getManager();
 
-                      if ($request->request->get("Recherche") || $request->request->get("Marque") || $request->request->get("Categorie")){
-                          $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)
-                                              ->MaterielById($request->request->get("Recherche"),$request->request->get("Marque"),$request->request->get("Categorie"));
-
-                          $render = $this->renderView('RenderRecherche.html.twig', [
-                                                          'listeMateriel' => $tabMateriel
-                                                      ]);
-
-                          $arrData = ['tab' => $render,
-                                      'output' => $request->request->get("query")
-                                       ];
-                          return new JsonResponse($arrData);
-                      }
-
-
-                      $Materiel=$em->getRepository(Materiel::class)->findAll();
+                  if ($request->request->get("Recherche") || $request->request->get("Marque") || $request->request->get("Categorie")){
+                      $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)
+                                          ->MaterielById($request->request->get("Recherche"),$request->request->get("Marque"),$request->request->get("Categorie"));
 
                       $render = $this->renderView('RenderRecherche.html.twig', [
-                                                      'listeMateriel' => $Materiel
+                                                      'listeMateriel' => $tabMateriel
                                                   ]);
 
                       $arrData = ['tab' => $render,
                                   'output' => $request->request->get("query")
                                    ];
                       return new JsonResponse($arrData);
+                  }
+
+
+                  $Materiel=$em->getRepository(Materiel::class)->findAll();
+
+                  $render = $this->renderView('RenderRecherche.html.twig', [
+                                                  'listeMateriel' => $Materiel
+                                              ]);
+
+                  $arrData = ['tab' => $render,
+                              'output' => $request->request->get("query")
+                               ];
+                  return new JsonResponse($arrData);
               }
 
                 /**
                 *
                 * @Route("/effacerMateriel/{idMateriel}", name="effacerMateriel")
+                * @Security("has_role('ROLE_ADMIN')")
                 */
                 public function effacerMateriel($idMateriel)
                 {

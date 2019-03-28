@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 ;
 
 
@@ -25,6 +26,7 @@ class MarqueController extends Controller
     /**
     *
     * @Route("/AffichageMarque",name="AffichageMarque")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function AffichageMarque()
     {
@@ -45,6 +47,7 @@ class MarqueController extends Controller
     /**
     *
     * @Route("/effacerMarque/{id}", name="effacerMarque")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function effacerMarque($id)
     {
@@ -69,6 +72,7 @@ class MarqueController extends Controller
 
     /**
      * @Route("/ajoutMarque", name="ajoutMarque")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function ajoutMarque(Request $request) // paramètre qui donnera accès aux données saisies
     {
@@ -114,6 +118,7 @@ class MarqueController extends Controller
 
           /**
            * @Route("/modifMarque/{id}", name="modifMarque")
+           * @Security("has_role('ROLE_ADMIN')")
            */
           public function modifMarque(Request $request,$id) // paramètre qui donnera accès aux données saisies
           {

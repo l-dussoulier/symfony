@@ -1,0 +1,30 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Materiel</title>
+        <style type="text/css">
+
+          #tab2{
+            padding-top: 50px;
+          }
+
+        </style>
+
+    </head>
+    {% include 'css.html.twig' %}
+    {% include 'nav-save.html' %}
+
+    <body class="container">
+      <div class="cont">
+
+    	<h1 class="text-primary">Retourner un Materiel</h1>
+
+        {{ form_start(formulaire) }}
+        {{ form_widget(formulaire) }}
+        {{ form_end(formulaire) }}
+        </div>
+    </body>
+</html>

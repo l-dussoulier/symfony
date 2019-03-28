@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Emprunt
  *
  * @ORM\Table(name="emprunt", indexes={@ORM\Index(name="emprunt_emprunteur_FK", columns={"idUser"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EmpruntRepository")
  */
 class Emprunt
 {
@@ -43,25 +43,24 @@ class Emprunt
     private $dateretoureffectif;
 
     /**
-     * @var int|null
+     * @var \Materiel
      *
-     * @ORM\Column(name="idUser", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Materiel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idMateriel", referencedColumnName="Id")
+     * })
      */
-    private $iduser;
+    private $idMateriel;
 
     /**
-     * @var int
+     * @var \User
      *
-     * @ORM\Column(name="idMateriel", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUser", referencedColumnName="id")
+     * })
      */
-    private $idmateriel;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="Statut_emprunt", type="integer", nullable=true)
-     */
-    private $statutEmprunt;
+    private $idUser;
 
     /**
      * @var string|null
@@ -111,38 +110,26 @@ class Emprunt
         return $this;
     }
 
-    public function getIduser(): ?int
+    public function getIdMateriel(): ?Materiel
     {
-        return $this->iduser;
+        return $this->idMateriel;
     }
 
-    public function setIduser(?int $iduser): self
+    public function setIdMateriel(?Materiel $idMateriel): self
     {
-        $this->iduser = $iduser;
+        $this->idMateriel = $idMateriel;
 
         return $this;
     }
 
-    public function getIdmateriel(): ?int
+    public function getIdUser(): ?User
     {
-        return $this->idmateriel;
+        return $this->idUser;
     }
 
-    public function setIdmateriel(int $idmateriel): self
+    public function setIdUser(?User $idUser): self
     {
-        $this->idmateriel = $idmateriel;
-
-        return $this;
-    }
-
-    public function getStatutEmprunt(): ?int
-    {
-        return $this->statutEmprunt;
-    }
-
-    public function setStatutEmprunt(?int $statutEmprunt): self
-    {
-        $this->statutEmprunt = $statutEmprunt;
+        $this->idUser = $idUser;
 
         return $this;
     }

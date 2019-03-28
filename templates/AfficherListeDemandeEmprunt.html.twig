@@ -6,6 +6,7 @@
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
         <style>
@@ -15,6 +16,50 @@
           }
         </style>
 
+        <!-- AJAX -->
+        <script>
+                  var idEmprunt;
+                  function BoutonValider(idEmprunt){
+                    console.log(idEmprunt);
+                    $.ajax({
+                      type: "POST",
+                      url: "{{ path('ValiderModal')}}",
+                      data:{"idEmprunt":idEmprunt},
+                      success:function(data)
+                      {
+                        window.idEmprunt = data.idEmprunt;
+                        $("#User").val(data.User);
+                        $("#Date").val(data.Date);
+                        $("#Categorie").val(data.Categorie);
+                        $("#Marque").val(data.Marque);
+                        $("#Materiel").val(data.Materiel);
+                      }
+                    });
+                  }
+
+
+                  function ValiderModal(){
+
+                    var date = $("#dateDemande").val();
+
+                    console.log(date);
+
+                    if(date){
+                      $.ajax({
+                        type: "POST",
+                        url: "{{ path('ModalEnregistrement')}}",
+                        data:{"idEmprunt":window.idEmprunt,
+                              "dateDemande":date},
+                        success:function(data)
+                        {
+                          document.location.href="https://kroko.ovh/~soares/TestSymfony/public/index.php/bienvenue";
+                        }
+                      });
+                    }
+                  }
+
+        </script>
+
     </head>
 
     <body>
@@ -23,60 +68,93 @@
       {% include 'nav-save.html' %}
 
 
-    <div class="cont">
+      <div class="cont">
 
-    	<h1 class="text-primary">{{message}}</h1>
+      	<h1 class="text-primary">{{message}}</h1>
 
-    	<table class="table table-striped table-hover">
-          <tr>
-              <td style="border-left: 2px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><b>Nom</td>
-              <td><b>Prénom</td>
-              <td><b>Formation</td>
-              <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><b>Matériel </td>
-              <td><b>Marque</td>
-              <td><b>Etat </td>
-              <td><b>Date</td>
-              <td><b>Action</b></td>
-              <td></td>
+      	<table class="table table-striped table-hover">
+            <tr>
+                <td style="border-left: 2px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><b>Nom</td>
+                <td><b>Prénom</td>
+                <td><b>Formation</td>
+                <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><b>Matériel </td>
+                <td><b>Marque</td>
+                <td><b>Etat </td>
+                <td><b>Date</td>
+                <td><b>Action</b></td>
+                <td></td>
+            </tr>
+      		{% for Tab in listeDemande %}
+      			<tr>
+      				<td style="border-left: 2px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">{{Tab.idUser.nom}}</td>
+              <td>{{Tab.idUser.prenom}}</td>
+              <td>{{Tab.idUser.Formation}}</td>
+              <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">{{Tab.idMateriel.description}}</td>
+              <td>{{Tab.idMateriel.Marque.libelle}}</td>
+              <td>{{Tab.idMateriel.Etat.libelle}}</td>
+              <td>{{Tab.date_demande|date("d/m/Y")}}</td>
 
-          </tr>
-    		{% for Tab in listeDemande %}
-    			<tr>
-    				<td style="border-left: 2px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">{{Tab.idUser.nom}}</td>
-            <td>{{Tab.idUser.prenom}}</td>
-            <td>{{Tab.idUser.Formation}}</td>
-            <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">{{Tab.idMateriel.description}}</td>
-            <td>{{Tab.idMateriel.Marque.libelle}}</td>
-            <td>{{Tab.idMateriel.Etat.libelle}}</td>
-            <td>{{Tab.date_demande|date("d/m/Y")}}</td>
-            <td>
-
-
-
-                                 <form  action="{{ path('effacerMarque', {id: Tab.id}) }}" >
-                                   <button  class="btn btn-danger"><i class="far fa-check-circle"></i></button>
-                                 </form>
-
-</td>
-<td>
-
-                                 <form  action="{{ path('refuser', {id: Tab.id}) }}" >
-                                   <button  class="btn btn-info"><i class="fas fa-times"></i></button>
-                                 </form>
+              <!--Bouton accepter -->
+              <td>
+                <button onclick="BoutonValider({{Tab.id}})" class="btn btn-success"  data-toggle="modal" data-target="#exampleModal"><i class="far fa-check-circle"></i></button>
+              </td>
+              <!--Bouton Refuser -->
+              <td>
+                 <form  action="{{ path('refuser', {id: Tab.id}) }}" >
+                   <button  class="btn btn-danger"><i class="fas fa-times"></i></button>
+                 </form>
               </td>
 
+            </tr>
+      		{% endfor %}
+
+      	</table>
+        <div class="Test"></div>
+      </div>
 
 
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body Test">
 
 
+                <label for="User">Utilisateur :</label>
+                <input type="text" id="User" name="User" required minlength="4" maxlength="8" size="10" disabled>
+
+                <label for="Date">Date :</label>
+                <input type="text" id="Date" name="Date" required minlength="4" maxlength="8" size="10" disabled>
+
+                <label for="Categorie">Categorie :</label>
+                <input type="text" id="Categorie" name="Categorie" required minlength="4" maxlength="8" size="10" disabled>
+
+                <label for="Marque">Marque :</label>
+                <input type="text" id="Marque" name="Marque" required minlength="4" maxlength="8" size="10" disabled>
+
+                <label for="Materiel">Materiel :</label>
+                <input type="text" id="Materiel" name="Categorie" required minlength="4" maxlength="8" size="10" disabled>
+
+                <label for="dateDemande">Date de Retour :</label>
+                <input type="date" id="dateDemande" name="dateDemande" required minlength="4" maxlength="8" size="10">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button onclick="ValiderModal()" type="button" id="ValiderModal" class="btn btn-primary">Valider</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
 
 
-          </tr>
-    		{% endfor %}
-
-    	</table>
-
-
-    </div>
     </body>
 </html>

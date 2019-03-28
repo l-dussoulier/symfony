@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
   use App\Entity\User;
   use App\Form\RegistrationType;
   use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+  use Symfony\Component\HttpFoundation\Response;
 
       class SecurityController extends Controller
       {
@@ -54,5 +55,22 @@ use Symfony\Component\HttpFoundation\Request;
           public function logout(){}
 
 
-      
+
+            /**
+            * @Route("/connexionMobile", name="security_login_mobile")
+            */
+            public function loginMobile(Request $request) {
+
+                $request = Request::createFromGlobals();
+
+                // Récupérer les infos de la route
+                $request->getPathInfo();
+
+                // Récupérer les $_POST
+                $request->request->get('email', 'default category');
+                
+
+            }
+
+
 }
