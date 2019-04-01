@@ -78,8 +78,8 @@ class EmpruntController extends Controller
     $em->persist($demande);
     $em->persist($mat);
     $em->flush();
+    
     // mettre statut emprunt a 1
-
     return $this->redirectToRoute('bienvenue');
   }
 
