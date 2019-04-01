@@ -44,7 +44,6 @@ class EmpruntController extends Controller
   /**
   *
   * @Route("/DemandeEmprunt/{id}",name="DemandeEmprunt")
-  * @Security("has_role('ROLE_ADMIN')")
   */
   public function demande(Request $request, $id)
   {
@@ -301,5 +300,22 @@ class EmpruntController extends Controller
       "message" => $idEmprunt
     ));
 
+  }
+
+  /**
+  *
+  * @Route("/listeEmpruntHistorique",name="listeEmpruntHistorique")
+  */
+  public function listeEmpruntHistorique()
+  {
+    $em = $this->getDoctrine()->getManager();
+    $usr = $this->get('security.token_storage')->getToken()->getUser()->getId();
+    $objStatut = $this->getDoctrine()->getRepository(Emprunt::class)->DateEffectifNull_IdUser(false,$usr);
+
+    return $this->render('AfficherHistoriqueUser.html.twig',
+    array(
+      "message" => "liste d'emprunts terminées",
+      "listeDemande" => $objStatut
+    ));
   }
 }

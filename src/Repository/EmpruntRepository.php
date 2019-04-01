@@ -43,6 +43,34 @@ class EmpruntRepository extends EntityRepository
 
     return $qb;
     // a finir
-  }
+
+}
+
+    // verifie si dateRetoruEffectif est non Nul et id d'utilisateur
+    public function DateEffectifNull_IdUser(bool $b, int $id)
+    {
+      if($b){
+        $qb = $this->createQueryBuilder('q')
+            ->andWhere('q.dateretoureffectif IS NULL')
+            ->andWhere('q.idUser = :id')
+            ->setParameter('id', $id)
+            ->orderBy('q.idemprunt', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $qb;
+      }
+
+      $qb = $this->createQueryBuilder('q')
+          ->andWhere('q.dateretoureffectif IS NOT NULL')
+          ->andWhere('q.idUser = :id')
+          ->setParameter('id', $id)
+          ->orderBy('q.idemprunt', 'ASC')
+          ->getQuery()
+          ->getResult();
+
+      return $qb;
+      // a finir
+    }
 
 }

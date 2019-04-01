@@ -273,4 +273,42 @@ class MaterielController extends Controller
                       "listeMateriel" => $tabMateriel
                         ));
                 }
+
+                /**
+          *
+          * @Route("/listeUser",name="listeUser")
+          */
+          public function user()
+          {
+                $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->CheckStatut(false);
+                return $this->render('AfficherListeMateriel_user.html.twig',
+                    array(
+                    "message" => "liste des Materiels",
+                    "listeMateriel" => $tabMateriel
+                    ));
+            }
+
+            /**
+            *
+            * @Route("/listeUserMobile",name="listeUserMobile")
+            */
+            public function userMobile()
+            {
+                  $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
+                  $data = [];
+
+                  foreach ($tabMateriel as $unMat) {
+                        $ligne = [];
+                        $ligne['ID'] = $unMat->getId();
+                        $ligne['Categorie'] = $unMat->getCategorie()->getNomcat();
+                        $ligne['Marque'] = $unMat->getMarque()->getLibelle();
+                        $ligne['Description'] = $unMat->getDescription();
+                        $ligne['Etat'] = $unMat->getEtat()->getLibelle();
+
+                        $data[] = $ligne;
+                  }
+
+                  return new JsonResponse($data);
+
+              }
 }
