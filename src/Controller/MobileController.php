@@ -20,9 +20,56 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Entity\User;
 use App\Entity\StatutDemandeEmprunt;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class MoblieController extends Controller
+class MobileController extends Controller
 {
+
+
+  /**
+  * @Route("/connexionMobile", name="security_login_mobile")
+  */
+  public function loginMobile(Request $request,UserPasswordEncoderInterface $encoder) {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $Reponse = [];
+
+
+    if ($content = $request->getContent()) {
+        $Reponse = json_decode($content, true);
+    }
+
+
+    $identifiant = "";
+    $identifiant= $Reponse['identifiant'];
+    $password = $Reponse['mdp'];
+
+    $test = $this->getDoctrine()->getRepository(User::class)->checkUser($identifiant);
+    if ($test) {
+
+        $encoderService = $this->container->get('security.password_encoder');
+        $match = $encoderService->isPasswordValid($test[0], $password);
+
+        if ($match)
+        {
+          $retour = [];
+          $retour['id'] = $test[0]->getId();
+          $retour['email'] = $test[0]->getEmail();
+          $retour['nom'] = $test[0]->getNom();
+          $retour['prenom'] = $test[0]->getPrenom();
+          $retour['formation'] = $test[0]->getFormation();
+          $retour['username'] = $test[0]->getUsername();
+
+          return new JsonResponse($retour);
+        }
+  }
+    $tabvide = [];
+    return new JsonResponse($tabvide);
+
+  }
+
+
   /**
   *
   * @Route("/listeUserMobile",name="listeUserMobile")
