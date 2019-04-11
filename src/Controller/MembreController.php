@@ -62,18 +62,13 @@ class MembreController extends Controller
            $this->getDoctrine()->getManager()->persist($unMem);
            $this->getDoctrine()->getManager()->flush();
 
-              return $this->redirectToRoute('listeMembres');
+          return $this->redirectToRoute('listeMembres');
        }
 
-       // prout prout prout test.
-       // salut francisco
-
-
-
-          return $this->render('AjouterMem.html.twig',
-                array(
-                    "formulaire" => $formulaire->createView()
-                  )
+        return $this->render('AjouterMem.html.twig',
+              array(
+                  "formulaire" => $formulaire->createView()
+                )
               );
 
 
@@ -140,14 +135,14 @@ class MembreController extends Controller
           public function listeMembres()
           {
               $tabMembre = $this->getDoctrine()->getRepository(User::class)->findAll();
-              return $this->render('AfficherListeMembres.html.twig',
+              return $this->render('Membre/ListeMembres.html.twig',
                   array(
                   "message" => "liste des Membres",
                   "listeMembres" => $tabMembre
                   ));
           }
 
-  
+
 
 
             /**
@@ -162,7 +157,7 @@ class MembreController extends Controller
               $entityManager->remove($Mem);
               $entityManager->flush();
               $tabMembre = $this->getDoctrine()->getRepository(User::class)->findAll();
-              return $this->render('AfficherListeMembres.html.twig',
+              return $this->render('Membre/ListeMembres.html.twig',
                   array(
                   "message" => "liste des Membres",
                   "listeMembres" => $tabMembre

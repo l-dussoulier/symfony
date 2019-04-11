@@ -86,7 +86,7 @@ class MaterielController extends Controller
 
 
 
-          return $this->render('AjouterMat.html.twig',
+          return $this->render('Materiel/AjouterMateriel.html.twig',
                 array(
                     "formulaire" => $formulaire->createView()
                   )
@@ -155,7 +155,7 @@ class MaterielController extends Controller
 
 
 
-            return $this->render('ModifMat.html.twig',
+            return $this->render('Materiel/ModifMat.html.twig',
                   array(
                       "formulaire" => $formulaire->createView()
                     )
@@ -191,7 +191,7 @@ class MaterielController extends Controller
                   ->getForm();
 
 
-                  return $this->render('ListeMateriel.html.twig',
+                  return $this->render('Materiel/ListeMateriel.html.twig',
                         array(
                             "message" => "liste des Materiels",
                             "formulaire" => $formulaire->createView()
@@ -213,7 +213,7 @@ class MaterielController extends Controller
                       $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)
                                           ->MaterielById($request->request->get("Recherche"),$request->request->get("Marque"),$request->request->get("Categorie"));
 
-                      $render = $this->renderView('RenderRecherche.html.twig', [
+                      $render = $this->renderView('Materiel/RenderRecherche.html.twig', [
                                                       'listeMateriel' => $tabMateriel
                                                   ]);
 
@@ -226,7 +226,7 @@ class MaterielController extends Controller
 
                   $Materiel=$em->getRepository(Materiel::class)->findAll();
 
-                  $render = $this->renderView('RenderRecherche.html.twig', [
+                  $render = $this->renderView('Materiel/RenderRecherche.html.twig', [
                                                   'listeMateriel' => $Materiel
                                               ]);
 
@@ -259,7 +259,7 @@ class MaterielController extends Controller
           public function user()
           {
                 $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->CheckStatut(false);
-                return $this->render('AfficherListeMateriel_user.html.twig',
+                return $this->render('Materiel/ListeMateriel_user.html.twig',
                     array(
                     "message" => "liste des Materiels",
                     "listeMateriel" => $tabMateriel

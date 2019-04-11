@@ -20,7 +20,7 @@
     <body>
 
       {% include 'css.html.twig' %}
-      {% include 'nav-save.html' %}
+      {% include 'navigation/nav-save.html' %}
 
 
     <div class="cont">
@@ -39,26 +39,34 @@
     				<td>{{Tab.libelle}} </td>
 
             <td>
-                     <div class="dropdown">
 
-                         <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
 
-                            <div class="dropdown-menu">
-
-                               <a class="dropdown-item">
+                               <div style="float:left;">
                                  <form  action="{{ path('effacerMarque', {id: Tab.id}) }}" >
-                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
+                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                  </form>
-                               </a>
+                                 </div>
 
-                               <a class="dropdown-item">
+                                 <div style="float:left; margin-left: 1em;">
                                  <form  action="{{ path('modifMarque', {id: Tab.id}) }}" >
-                                   <button  class="btn btn-info"><i class="fas fa-pen"></i>  Editer</button>
+                                   <button  class="btn btn-info"><i class="fas fa-pen"></i></button>
                                  </form>
-                               </a>
+                                   </div>
 
 
-                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             </td>
 

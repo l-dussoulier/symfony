@@ -34,7 +34,7 @@ class EmpruntController extends Controller
   {
     $objStatut = $this->getDoctrine()->getRepository(DemandeEmprunt::class)->checkIdStatutEmprunt(0);
 
-    return $this->render('AfficherListeDemandeEmprunt.html.twig',
+    return $this->render('Emprunt/ListeDemandeEmprunt.html.twig',
     array(
       "message" => "liste des demande d'emprunt",
       "listeDemande" => $objStatut
@@ -78,7 +78,7 @@ class EmpruntController extends Controller
     $em->persist($demande);
     $em->persist($mat);
     $em->flush();
-    
+
     // mettre statut emprunt a 1
     return $this->redirectToRoute('bienvenue');
   }
@@ -104,10 +104,8 @@ class EmpruntController extends Controller
     $emprunt = $action->find($id)
                   ->setStatut($statut);
 
-
-                  $mat = $emprunt->getIdMateriel()
-                                  ->setStatutemprunt(false);
-
+    $mat = $emprunt->getIdMateriel()
+                   ->setStatutemprunt(false);
 
     $em->persist($mat);
     $em->persist($emprunt);
@@ -149,7 +147,7 @@ class EmpruntController extends Controller
        $formulaire->handleRequest($request);
 
        // est-ce que les champs remplis ont été envoyé au serveur ?
-       // si oui, on place les données dans l'instance de Joueur
+       // si oui, on place les données dans l'instance
        if ($formulaire->isSubmitted() && $formulaire->isValid())
        {
            // récupération des données
@@ -162,14 +160,14 @@ class EmpruntController extends Controller
            $this->getDoctrine()->getManager()->persist($Mat);
            $this->getDoctrine()->getManager()->flush();
 
-           return $this->redirectToRoute('listeMateriel');
+           return $this->redirectToRoute('listeEmpruntsEnCours');
        }
 
-        return $this->render('RetourMaterielFormulaire.html.twig',
-              array(
-                  "formulaire" => $formulaire->createView()
-                )
-            );
+       return $this->render('Emprunt/RetourMaterielFormulaire.html.twig',
+               array(
+                   "formulaire" => $formulaire->createView()
+                 )
+             );
   }
 
 
@@ -202,9 +200,9 @@ class EmpruntController extends Controller
       $this->getDoctrine()->getManager()->persist($unMat);
       $this->getDoctrine()->getManager()->persist($emp);
       $this->getDoctrine()->getManager()->flush();
-      return $this->redirectToRoute('bienvenue');
+      return $this->redirectToRoute('listeEmpruntsEnCours');
     }
-    return $this->render('retourEmprunt.html.twig',
+    return $this->render('Emprunt/RetourMaterielFormulaire.html.twig',
     array(
       "formulaire" => $formulaire->createView()
     )
@@ -219,7 +217,7 @@ class EmpruntController extends Controller
   {
     $objStatut = $this->getDoctrine()->getRepository(Emprunt::class)->DateEffectifNull(true);
 
-    return $this->render('AfficherListeEmpruntEnCours.html.twig',
+    return $this->render('Emprunt/ListeEmpruntEnCours.html.twig',
     array(
       "message" => "liste d'emprunts en cours",
       "listeDemande" => $objStatut
@@ -235,7 +233,7 @@ class EmpruntController extends Controller
   {
     $objStatut = $this->getDoctrine()->getRepository(Emprunt::class)->DateEffectifNull(false);
 
-    return $this->render('AfficherListeEmpruntTerminees.html.twig',
+    return $this->render('Emprunt/ListeEmpruntFin.html.twig',
     array(
       "message" => "liste d'emprunts terminées",
       "listeDemande" => $objStatut
@@ -295,7 +293,7 @@ class EmpruntController extends Controller
     $this->getDoctrine()->getManager()->persist($DemandeEmprunt);
     $this->getDoctrine()->getManager()->flush();
 
-    return $this->render('RenderModalEmprunt.html.twig',
+    return $this->render('Emprunt/RenderModalEmprunt.html.twig',
     array(
       "message" => $idEmprunt
     ));
@@ -312,7 +310,7 @@ class EmpruntController extends Controller
     $usr = $this->get('security.token_storage')->getToken()->getUser()->getId();
     $objStatut = $this->getDoctrine()->getRepository(Emprunt::class)->DateEffectifNull_IdUser(false,$usr);
 
-    return $this->render('AfficherHistoriqueUser.html.twig',
+    return $this->render('Emprunt/HistoriqueUser.html.twig',
     array(
       "message" => "liste d'emprunts terminées",
       "listeDemande" => $objStatut

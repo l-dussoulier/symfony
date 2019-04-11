@@ -21,7 +21,7 @@
     <body>
 
       {% include 'css.html.twig' %}
-      {% include 'nav-save.html' %}
+      {% include 'navigation/nav-save.html' %}
 
 
       <div class="cont">
@@ -37,7 +37,7 @@
                 <td><b>Marque</td>
                 <td><b>Etat </td>
                   <td><b>Date de l'emprunt</td>
-                <td><b>Date de retour Demendée</td>
+                <td><b>Date de retour Demandée</td>
                 <td></td>
             </tr>
       		{% for Tab in listeDemande %}
@@ -50,10 +50,9 @@
               <td>{{Tab.idMateriel.Etat.libelle}}</td>
               <td>{{Tab.DatePret|date("d/m/Y")}}</td>
               <td>{{Tab.DateRetourDemander|date("d/m/Y")}}</td>
-              <!--Bouton Valider -->
               <td>
                  <form  action="{{ path('ValiderRetourEmprunt', {id: Tab.idEmprunt}) }}" >
-                   <button  class="btn btn-success"><i class="fas fa-times"></i></button>
+                   <button  class="btn btn-success"><i class="fas fa-check"></i></button>
                  </form>
               </td>
             </tr>

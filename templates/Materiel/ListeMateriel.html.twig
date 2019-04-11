@@ -75,7 +75,7 @@
     <body>
 
       {% include 'css.html.twig' %}
-      {% include 'nav-save.html' %}
+      {% include 'navigation/nav-save.html' %}
 
     <div class="cont">
         <br>
@@ -105,7 +105,7 @@
           <td><b>Marque</b></td>
           <td><b>Description</b></td>
           <td><b>état</b></td>
-      
+
         {% for Materiel in listeMateriel %}
           <tr>
             <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"> {{Materiel.id}} </td>

@@ -14,7 +14,7 @@
     </head>
     <body>
       {% include 'css.html.twig' %}
-      {% include 'nav-save.html' %}
+      {% include 'navigation/nav-save.html' %}
     <div class="cont">
 
     	<h1 class="text-primary">{{message}}</h1>
@@ -41,18 +41,14 @@
 
 
             <td style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">
-                     <div class="dropdown">
 
-                         <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
 
-                            <div class="dropdown-menu">
 
-                               <a class="dropdown-item">
+
                                  <form  action="{{ path('effacerMembres', {idMembres: Tab.id}) }}" >
-                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
+                                   <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                  </form>
-                               </a>
-                        </div>
+                      
 
             </td>
 

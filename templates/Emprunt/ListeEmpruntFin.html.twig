@@ -21,7 +21,7 @@
     <body>
 
       {% include 'css.html.twig' %}
-      {% include 'nav-save.html' %}
+      {% include 'navigation/nav-save.html' %}
 
 
       <div class="cont">
@@ -36,8 +36,9 @@
                 <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><b>Matériel </td>
                 <td><b>Marque</td>
                 <td><b>Etat </td>
-                  <td><b>Date de l'emprunt</td>
-                <td><b>Date de retour Demendée</td>
+                <td><b>Incident </td>
+                <td><b>Date de l'emprunt</td>
+                <td><b>Date de retour Demandée</td>
                 <td><b>Date de retour réelle </td>
                 <td></td>
             </tr>
@@ -49,6 +50,7 @@
               <td style="border-left: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;">{{Tab.idMateriel.description}}</td>
               <td>{{Tab.idMateriel.Marque.libelle}}</td>
               <td>{{Tab.idMateriel.Etat.libelle}}</td>
+              <td>{{Tab.Incident}}</td>
               <td>{{Tab.DatePret|date("d/m/Y")}}</td>
               <td>{{Tab.DateRetourDemander|date("d/m/Y")}}</td>
               <td>{{Tab.DateRetourEffectif|date("d/m/Y")}}</td>

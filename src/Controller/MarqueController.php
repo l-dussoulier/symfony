@@ -30,12 +30,9 @@ class MarqueController extends Controller
     */
     public function AffichageMarque()
     {
-
         $tabMarque = $this->getDoctrine()->getRepository(Marque::class)->findAll();
 
-
-
-        return $this->render('AfficherListeMarque.html.twig',
+        return $this->render('Marque/ListeMarque.html.twig',
   		    	array(
   					"message" => "liste des marques",
   					"listeMarque" => $tabMarque
@@ -60,7 +57,7 @@ class MarqueController extends Controller
 
       $tabMarque = $this->getDoctrine()->getRepository(Marque::class)->findAll();
 
-      return $this->render('AfficherListeMarque.html.twig',
+      return $this->render('Marque/ListeMarque.html.twig',
           array(
           "message" => "liste des marques",
           "listeMarque" => $tabMarque
@@ -84,7 +81,7 @@ class MarqueController extends Controller
         // partie "création"
         $formulaire = $this->createFormBuilder($uneMarque)
             ->add("libelle", TextType::class, array("label"=> "nom de la marque :", "required"=>true))
-            ->add("valider", SubmitType::class,array("label"=> "Ajouter un matériel "))
+            ->add("valider", SubmitType::class,array("label"=> "Ajouter une marque "))
             ->getForm();
 
             // partie "gestion de la réponse"
@@ -103,9 +100,7 @@ class MarqueController extends Controller
               return $this->redirectToRoute('AffichageMarque');
        }
 
-
-
-          return $this->render('AjouterMarque.html.twig',
+          return $this->render('Marque/AjouterMarque.html.twig',
                 array(
                     "formulaire" => $formulaire->createView()
                   )
@@ -152,12 +147,12 @@ class MarqueController extends Controller
 
 
 
-                  return $this->redirectToRoute('listeMarque');
+                  return $this->redirectToRoute('AffichageMarque');
              }
 
 
 
-                return $this->render('ModifMarque.html.twig',
+                return $this->render('Marque/ModifMarque.html.twig',
                       array(
                           "formulaire" => $formulaire->createView()
                         )
