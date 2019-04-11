@@ -21,6 +21,7 @@ use App\Entity\User;
 use App\Entity\StatutDemandeEmprunt;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class MobileController extends Controller
 {
@@ -68,6 +69,50 @@ class MobileController extends Controller
     return new JsonResponse($tabvide);
 
   }
+
+
+  /**
+  * @Route("/inscriptionMobile", name="security_registration_mobile")
+  */
+    public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder) {
+
+      $em = $this->getDoctrine()->getManager();
+
+      $Reponse = [];
+
+
+      if ($content = $request->getContent()) {
+          $Reponse = json_decode($content, true);
+      }
+
+      $email = $Reponse['email'];
+      $nom = $Reponse['nom'];
+      $prenom = $Reponse['prenom'];
+      $formation = $Reponse['formation'];
+      $username = $Reponse['username'];
+      $password = $Reponse['paswword'];
+      $role = "ROLE_USER";
+
+
+      $user = new User();
+
+        $hash = $encoder->encodePassword($user, $user->getPassword());
+         $user->setEmail($email)
+              ->setNom($nom)
+              ->setPrenom($prenom)
+              ->setFormation($formation)
+              ->setUsername($username)
+              ->setPassword($hash)
+              ->setRole($role);
+
+
+        $manager->persist($user);
+        $manager->flush();
+
+
+
+
+    }
 
 
   /**

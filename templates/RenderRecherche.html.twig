@@ -21,29 +21,29 @@
 
 
       <td>
-               <div class="dropdown">
 
-                   <i data-toggle="dropdown" class="glyphicon glyphicon-cog"></i>
 
-                      <div class="dropdown-menu">
+        <div >
 
-                         <a class="dropdown-item">
+          <div style="float:left;">
+
+
+                                   <form  action="{{ path('modifMat', {idMat: Materiel.id}) }}" >
+                                     <button  class="btn btn-info"><i class="fas fa-pen"></i></button>
+                                   </form>
+                                   </div>
+
+
+          <div style="float:left; margin-left: 1em;">
+
+
                            <form  action="{{ path('effacerMateriel', {idMateriel: Materiel.id}) }}" >
-                             <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i>  Supprimer</button>
+                             <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                            </form>
-                         </a>
+</div>
 
-                         <a class="dropdown-item">
-                           <form  action="{{ path('modifMat', {idMat: Materiel.id}) }}" >
-                             <button  class="btn btn-info"><i class="fas fa-pen"></i>  Editer</button>
-                           </form>
-                         </a>
 
-                        <!-- {% if Materiel.statutemprunt == false %}
-                           <a class="dropdown-item"><style="border-right: 1px solid #cdd0d4;border-bottom: 1px solid #cdd0d4;"><i onclick="emprunter({{Materiel.id}})" class="fas fa-user-check"></i></a>
-                         {% else %}
-                        {% endif %} -->
-                  </div>
+
 
       </td>
 

@@ -163,22 +163,7 @@ class MaterielController extends Controller
 
 
           }
-                /**
-                *
-                * @Route("/listeMaterielBasique",name="listeMaterielBasique")
-                * @Security("has_role('ROLE_ADMIN')")
-                */
-                public function listeMaterielBasique()
-                {
 
-                    $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
-
-                    return $this->render('salut.html.twig',
-              		    	array(
-              					"message" => "liste des Materiels",
-              					"listeMateriel" => $tabMateriel
-              		    	));
-                }
 
                 /**
                 *
@@ -264,14 +249,7 @@ class MaterielController extends Controller
                   $entityManager->remove($Mat);
                   $entityManager->flush();
 
-
-                  $tabMateriel = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
-
-                  return $this->render('salut.html.twig',
-                      array(
-                      "message" => "liste des Materiels",
-                      "listeMateriel" => $tabMateriel
-                        ));
+                  return $this->redirectToRoute('listeMateriel');
                 }
 
           /**
